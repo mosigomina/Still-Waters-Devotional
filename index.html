@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Still Waters | July 2026 — The Believer’s Duty to the Nation</title>
+  <title>Still Waters | July 2026 — The Believer's Duty to the Nation</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -67,12 +67,22 @@
       margin-bottom: 20px;
     }
     .header-theme {
-      font-style: italic;
       color: var(--cream);
       font-size: 1.15rem;
-      opacity: 0.85;
+      opacity: 0.9;
     }
-    .header-theme::before, .header-theme::after { content: '"'; color: var(--gold); }
+    .theme-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-right: 6px;
+    }
+    .theme-text {
+      font-style: italic;
+    }
 
     /* ─── MAIN ─── */
     main {
@@ -274,7 +284,9 @@
     <div class="edition-badge">July 2026 Edition</div>
     <h1>Still Waters</h1>
     <p class="header-sub">Daily Devotional</p>
-    <p class="header-theme">The Believer’s Duty to the Nation</p>
+    <p class="header-theme">
+      <span class="theme-label">In Focus:</span><span class="theme-text">The Believer’s Duty to the Nation</span>
+    </p>
   </header>
 
   <main>
@@ -361,8 +373,7 @@ const todayFeature  = document.getElementById('todayFeature');
 const featureNotice = document.getElementById('featureNotice');
 
 if (archiveMode) {
-  featureNotice.style.display = 'block';
-  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
+  fileListBlocker();
 } else if (unlockedUpTo === 0) {
   featureNotice.style.display = 'block';
   featureNotice.innerHTML = '🕊️ <strong>Still Waters Daily Devotional</strong> begins <strong>1 July 2026</strong>.<br>Come back then — a new devotional will unlock every day.';
@@ -371,6 +382,11 @@ if (archiveMode) {
   document.getElementById('todayFeatTitle').textContent = todayData.title;
   document.getElementById('todayFeatBtn').addEventListener('click', () => openModal(unlockedUpTo - 1));
   todayFeature.style.display = 'block';
+}
+
+function fileListBlocker() {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
 }
 
 // ─── Build Calendar Grid ───────────────────────────────────────────────────
