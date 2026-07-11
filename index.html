@@ -30,58 +30,39 @@
       flex-direction: column;
     }
 
-    /* ─── HEADER ─── */
+    /* ─── MINIMALIST HEADER ─── */
     header {
       background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
       border-bottom: 1px solid var(--border);
       text-align: center;
-      padding: 56px 24px 44px;
+      padding: 60px 24px 48px;
     }
     .edition-badge {
       display: inline-block;
-      background: rgba(201,168,76,0.15);
+      background: rgba(201,168,76,0.12);
       border: 1px solid var(--border);
       color: var(--gold);
       font-family: 'Segoe UI', sans-serif;
       font-size: 0.75rem;
       font-weight: 600;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      padding: 5px 16px;
-      border-radius: 20px;
-      margin-bottom: 18px;
-    }
-    header h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      color: var(--gold-lt);
-      letter-spacing: 4px;
-      font-weight: 400;
-      margin-bottom: 6px;
-    }
-    .header-sub {
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 0.85rem;
-      color: var(--muted);
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 20px;
+      padding: 4px 14px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    header h1 {
+      font-size: clamp(2.5rem, 6vw, 3.8rem);
+      color: var(--gold-lt);
+      letter-spacing: 3px;
+      font-weight: 400;
+      margin-bottom: 12px;
     }
     .header-theme {
       color: var(--cream);
-      font-size: 1.15rem;
-      opacity: 0.9;
-    }
-    .theme-label {
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-right: 6px;
-    }
-    .theme-text {
+      font-size: 1.1rem;
       font-style: italic;
+      opacity: 0.85;
     }
 
     /* ─── MAIN ─── */
@@ -163,13 +144,6 @@
       color: var(--muted);
       line-height: 1.3;
       font-family: 'Segoe UI', sans-serif;
-    }
-    .day-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--gold);
-      opacity: 0.5;
-      margin-top: auto;
     }
 
     /* ─── DATE-AWARE STATES ─── */
@@ -283,10 +257,7 @@
   <header>
     <div class="edition-badge">July 2026 Edition</div>
     <h1>Still Waters</h1>
-    <p class="header-sub">Daily Devotional</p>
-    <p class="header-theme">
-      <span class="theme-label">In Focus:</span><span class="theme-text">The Believer’s Duty to the Nation</span>
-    </p>
+    <p class="header-theme">The Believer’s Duty to the Nation</p>
   </header>
 
   <main>
@@ -329,7 +300,7 @@ const data = [
   { "day": 9, "title": "Daniel Stood in the Gap for His Nation", "ref": "Daniel 9:3" },
   { "day": 10, "title": "The Effective Prayer of a Righteous Person", "ref": "James 5:16" },
   { "day": 11, "title": "All Authority Comes from God", "ref": "John 19:11" },
-  { "day": 12, "title": "Submit for the Lord's Sake", "ref": "1 Peter 2:13-14" },
+  { "day": 12, "title": "Submit for the Lord’s Sake", "ref": "1 Peter 2:13-14" },
   { "day": 13, "title": "Rebelling Against Authority is Rebelling Against God", "ref": "Romans 13:2" },
   { "day": 14, "title": "Give to Caesar What Belongs to Caesar", "ref": "Matthew 22:21" },
   { "day": 15, "title": "Give Honour to Whom Honour is Due", "ref": "Romans 13:7" },
@@ -373,7 +344,8 @@ const todayFeature  = document.getElementById('todayFeature');
 const featureNotice = document.getElementById('featureNotice');
 
 if (archiveMode) {
-  fileListBlocker();
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
 } else if (unlockedUpTo === 0) {
   featureNotice.style.display = 'block';
   featureNotice.innerHTML = '🕊️ <strong>Still Waters Daily Devotional</strong> begins <strong>1 July 2026</strong>.<br>Come back then — a new devotional will unlock every day.';
@@ -382,11 +354,6 @@ if (archiveMode) {
   document.getElementById('todayFeatTitle').textContent = todayData.title;
   document.getElementById('todayFeatBtn').addEventListener('click', () => openModal(unlockedUpTo - 1));
   todayFeature.style.display = 'block';
-}
-
-function fileListBlocker() {
-  featureNotice.style.display = 'block';
-  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
 }
 
 // ─── Build Calendar Grid ───────────────────────────────────────────────────
@@ -423,7 +390,7 @@ data.forEach(d => {
     <div class="day-num">${d.day}</div>
     <div class="day-title">${d.title}</div>
     ${isToday  ? '<div class="today-badge">Today</div>' : ''}
-    ${isLocked ? '<div class="lock-icon">🔒</div>' : (!isToday ? '<div class="day-dot"></div>' : '')}
+    ${isLocked ? '<div class="lock-icon">🔒</div>' : ''}
   `;
 
   grid.appendChild(card);
@@ -432,7 +399,7 @@ data.forEach(d => {
 // ─── Direct URL Redirect Action ──────────────────────────────────────────
 function openModal(idx) {
   const targetDayNum = idx + 1;
-  window.location.href = `July2026/day${targetDayNum}.html`;
+  window.location.href = `July2026/day${targetDayNum}`;
 }
 </script>
 </body>
