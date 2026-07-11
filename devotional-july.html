@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Still Waters | July 2026 — The Believer's Duty to the Nation</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1b2a;
+      --card-bg:   #132235;
+      --card-hov:  #1b3050;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8c97a;
+      --cream:     #e8dcc8;
+      --muted:     #8a9bb0;
+      --green-bg:  #0d1f17;
+      --purple-bg: #160f2a;
+      --border:    rgba(201,168,76,0.18);
+      --radius:    12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 56px 24px 44px;
+    }
+    .edition-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--gold-lt);
+      letter-spacing: 4px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .header-sub {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .header-theme {
+      font-style: italic;
+      color: var(--cream);
+      font-size: 1.15rem;
+      opacity: 0.85;
+    }
+    .header-theme::before, .header-theme::after { content: '"'; color: var(--gold); }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 80px;
+    }
+    .section-label {
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* ─── CALENDAR GRID ─── */
+    .calendar-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .cal-day-name {
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .cal-empty {
+      /* placeholder for days before July 1 (Wed) */
+      background: transparent;
+    }
+    .day-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 10px 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+    .day-card:hover {
+      background: var(--card-hov);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.12);
+      border-color: rgba(201,168,76,0.4);
+    }
+    .day-card:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .day-num {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .day-title {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.3;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .day-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.5;
+      margin-top: auto;
+    }
+
+    /* ─── DATE-AWARE STATES ─── */
+    .day-card.locked {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(60%);
+      pointer-events: none;
+    }
+    .day-card.today {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), 0 6px 24px rgba(201,168,76,0.28);
+      background: #1d2f45;
+    }
+    .day-card.today .day-num { color: var(--gold-lt); }
+    .today-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #0a1525;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .lock-icon { font-size: 0.8rem; opacity: 0.4; margin-top: auto; }
+
+    /* ─── TODAY FEATURE BANNER ─── */
+    .today-feature {
+      background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.03) 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 14px;
+      padding: 30px 36px;
+      margin-bottom: 44px;
+      text-align: center;
+    }
+    .today-feature-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .today-feature-title {
+      font-size: clamp(1.1rem, 3vw, 1.55rem);
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .today-feature-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .today-feature-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .today-feature-btn:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .feature-notice {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 32px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .feature-notice strong { color: var(--gold-lt); }
+
+    /* ─── MODAL OVERLAY ─── */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 12, 22, 0.93);
+      z-index: 900;
+      overflow-y: auto;
+      padding: 24px 16px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: block; }
+
+    .modal-box {
+      background: #111e30;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 36px 36px;
+      position: relative;
+      animation: slideUp 0.25s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(24px); opacity: 0; }
+      to   { transform: translateY(0);    opacity: 1; }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 16px; right: 20px;
+      background: none; border: none;
+      color: var(--muted);
+      font-size: 1.4rem;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: var(--gold-lt); }
+
+    .modal-day-badge {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .modal-title {
+      font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      margin-bottom: 6px;
+      line-height: 1.25;
+    }
+    .modal-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+      letter-spacing: 1px;
+      margin-bottom: 22px;
+    }
+    .modal-divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 20px 0;
+    }
+    .modal-opening {
+      border-left: 3px solid var(--gold);
+      padding: 12px 18px;
+      margin: 0 0 24px;
+      font-style: italic;
+      color: var(--cream);
+      line-height: 1.7;
+      font-size: 1.02rem;
+      background: rgba(201,168,76,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .modal-body p {
+      font-size: 0.975rem;
+      line-height: 1.82;
+      color: #cdd9e5;
+      margin-bottom: 16px;
+    }
+    .modal-body p:last-child { margin-bottom: 0; }
+
+    /* Memory Verse Box */
+    .memory-box {
+      background: var(--purple-bg);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 28px;
+    }
+    .memory-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #9b8ec4;
+      margin-bottom: 10px;
+    }
+    .memory-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #d4c9f0;
+      margin-bottom: 8px;
+    }
+    .memory-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #9b8ec4;
+    }
+
+    /* Prayer Box */
+    .prayer-box {
+      background: var(--green-bg);
+      border: 1px solid rgba(52,211,153,0.18);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 16px;
+    }
+    .prayer-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #52a882;
+      margin-bottom: 10px;
+    }
+    .prayer-text {
+      font-style: italic;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: #b8d4c4;
+    }
+
+    /* Navigation */
+    .modal-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      gap: 12px;
+    }
+    .modal-nav button {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      padding: 10px 22px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+      letter-spacing: 0.5px;
+    }
+    .modal-nav button:hover {
+      background: rgba(201,168,76,0.2);
+      border-color: rgba(201,168,76,0.5);
+    }
+    .modal-nav button:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+    .modal-nav .day-indicator {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #3a4e63;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      .modal-box { padding: 28px 18px 24px; }
+      .calendar-grid { gap: 5px; }
+      .day-card { padding: 10px 6px; min-height: 72px; }
+      .day-num { font-size: 1.1rem; }
+      .day-title { font-size: 0.58rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="edition-badge">July 2026 Edition</div>
+    <h1>Still Waters</h1>
+    <p class="header-sub">Daily Devotional</p>
+    <p class="header-theme">The Believer's Duty to the Nation</p>
+  </header>
+
+  <main>
+    <p class="section-label">Select a day to read</p>
+
+    <!-- Today Feature / Notice -->
+    <div id="todayFeature" class="today-feature" style="display:none;">
+      <div class="today-feature-label">📅 Today’s Devotional</div>
+      <h2 class="today-feature-title" id="todayFeatTitle"></h2>
+      <p class="today-feature-ref" id="todayFeatRef"></p>
+      <button class="today-feature-btn" id="todayFeatBtn">Read Today’s Devotional →</button>
+    </div>
+    <div id="featureNotice" class="feature-notice" style="display:none;"></div>
+
+    <!-- Day-name row -->
+    <div class="calendar-header">
+      <div class="cal-day-name">Sun</div>
+      <div class="cal-day-name">Mon</div>
+      <div class="cal-day-name">Tue</div>
+      <div class="cal-day-name">Wed</div>
+      <div class="cal-day-name">Thu</div>
+      <div class="cal-day-name">Fri</div>
+      <div class="cal-day-name">Sat</div>
+    </div>
+
+    <!-- Calendar grid: July 2026 starts on Wednesday (index 3) -->
+    <div class="calendar-grid" id="calGrid"></div>
+  </main>
+
+  <!-- Modal -->
+  <div id="modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title-el">
+    <div class="modal-box">
+      <button class="modal-close" id="modalClose" aria-label="Close devotional">✕</button>
+      <div class="modal-day-badge" id="modalDayBadge"></div>
+      <h2 class="modal-title" id="modal-title-el"></h2>
+      <div class="modal-ref" id="modalRef"></div>
+      <hr class="modal-divider" />
+      <blockquote class="modal-opening" id="modalOpening"></blockquote>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="memory-box">
+        <div class="memory-label">📖 Memory Verse</div>
+        <p class="memory-text" id="modalMemVerse"></p>
+        <div class="memory-ref" id="modalMemRef"></div>
+      </div>
+      <div class="prayer-box">
+        <div class="prayer-label">🙏 Prayer</div>
+        <p class="prayer-text" id="modalPrayer"></p>
+      </div>
+      <div class="modal-nav">
+        <button id="navPrev">&#8592; Previous</button>
+        <span class="day-indicator" id="navIndicator"></span>
+        <button id="navNext">Next &#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>Still Waters Daily Devotional &mdash; July 2026 &mdash; The Believer's Duty to the Nation</footer>
+
+<script>
+const data = [
+  {
+    day: 1,
+    title: "God Placed You in the Nation for a Purpose",
+    ref: "Acts 17:26–27",
+    opening: "From one man he made all the nations, that they should inhabit the whole earth; and he marked out their appointed times in history and the boundaries of their lands. (Acts 17:26–27)",
+    body: [
+      "Where do you think your story began? Was it in the delivery room where you were born? Was it on the day your birth certificate was issued? Or did it begin much earlier, in the mind and purpose of God?",
+      "The answer to that question influences how you see the nation you were born into. If you have never thought about it before, you may look at the economic, social, or political challenges around you and conclude that your nationality is nothing more than an accident of birth. In Acts 17:26–27, the Bible shows us that God determined where people would live and when they would live there. Your presence in this nation, at this moment, is therefore no accident. God chose this place for you. And if He chose this place for you, then He also has a purpose for you here. Your gifts, your prayers, your witness, and your service are all important for the nation where He has planted you.",
+      "Remember God-chasers like Joseph, Daniel, and Nehemiah. They belonged to earthly kingdoms but never forgot the God whose Kingdom came first. We are like them, also belonging to two kingdoms at the same time. Our highest allegiance belongs to Heaven, but God has assigned us to serve here on earth.",
+      "If we believe that God — not random chance — chose this nation for us long before we were conceived, we would stop asking \"Why was I born here?\" and start asking, \"Lord, why did You send me here?\""
+    ],
+    memVerse: "And hath made of one blood all nations of men... and hath determined the times before appointed, and the bounds of their habitation.",
+    memRef: "Acts 17:26",
+    prayer: "Dear Lord, thank You for placing me in this nation. Help me to see it as an assignment from You and to serve Your purpose faithfully wherever You have planted me. Amen."
+  },
+  {
+    day: 2,
+    title: "You Are a Chosen People, a Holy Nation",
+    ref: "Deuteronomy 7:6",
+    opening: "For you are a holy people to the Lord your God; the Lord your God has chosen you to be a people for Himself, a special treasure above all the peoples on the face of the earth. (Deuteronomy 7:6)",
+    body: [
+      "The Bible calls believers \"a holy nation.\" Why does it do so despite acknowledging — as we saw in yesterday's devotional — that it was God who gave us places and times on the earth, which became kingdoms and nations? The Bible is telling us that despite residing as members of different earthly nations, He has made us, believers in Christ Jesus, His own nation and people.",
+      "When the apostle Peter describes us as holy in 1 Peter 2:9, he means that we have been set apart for God's purpose. It is a calling that, instead of removing us from our communities, gives us a reason to be present within them. To put it differently, God leaves His people in the world because every nation needs men and women whose lives point others to Him.",
+      "Imagine God calling us His treasured possession (Deuteronomy 7:6). Treasure is valuable because of what it is worth to its owner. Therefore, believers are supposed to bring God's character into their homes, their workplaces, their neighbourhoods, and their nations. If all we do is merely fit into the culture around us, what is that to God? We are here, in this nation and at this time, to make Christ known and to live for the One who died for us."
+    ],
+    memVerse: "But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people...",
+    memRef: "1 Peter 2:9",
+    prayer: "Dear Lord, thank You for making me part of Your holy nation. Help me to live in a way that reflects Your character and draws others to You. Amen."
+  },
+  {
+    day: 3,
+    title: "You Are Strangers and Pilgrims on Earth",
+    ref: "Hebrews 11:13",
+    opening: "These all died in faith, not having received the promises, but having seen them afar off were assured of them, embraced them and confessed that they were strangers and pilgrims on the earth. (Hebrews 11:13)",
+    body: [
+      "The life of Abraham, the wandering man, did not begin in pilgrimage. Like everyone else, he had a country, relatives, and a father's house. Then God called him to leave all three behind (Genesis 12:1). From that day onward, the place Abraham came from became less important than the God who had called him.",
+      "Even after building a family and spending decades in Canaan, Abraham still described himself as \"a stranger and a sojourner\" (Genesis 23:4). In other words, God's call had given him a new identity and he had embraced that identity with everything he was and everything he had.",
+      "That same God has called everyone who belongs to Christ. We still live in earthly nations, we still cherish our people, and we still fulfil our responsibilities. But the One who called us has also given us a greater citizenship. And if the place of our birth explains where we came from, it must be God's call that explains who we are and will become.",
+      "If we think of ourselves only as citizens of one or more earthly nations, we would live as if this world is all there is. But if we remember that we are strangers and pilgrims on the earth itself, then our decisions, desires, and loyalties will tell the same story Abraham's life told. And you can be sure that it was a story that pleased the heart of God."
+    ],
+    memVerse: "These all died in faith... and confessed that they were strangers and pilgrims on the earth.",
+    memRef: "Hebrews 11:13",
+    prayer: "Dear God, thank You for calling me to Yourself. Help me to serve faithfully in the nation where You have placed me, while never forgetting where my true home is. Amen."
+  },
+  {
+    day: 4,
+    title: "You Are in the World but Not of It",
+    ref: "John 17:16",
+    opening: "They are not of the world, just as I am not of the world. (John 17:16)",
+    body: [
+      "A plant grows from whatever it is rooted in. If you pull it from one soil and place it in another, eventually its leaves, its fruit, even its shape will tell you which soil won. This is the real meaning behind being in the world but not of it.",
+      "Being in the world but not part of it has nothing to do with where you live. Instead, it is all about what you are rooted in while you live there. Physically, all of us believers in Christ are present in every nation, every culture, every system around us — just as Jesus prayed His Father would not remove us from it (John 17:15). But the issue has always been source, not presence.",
+      "Look at what Romans 12:2 says: that the world we live in has a pattern, like a uniform it is always trying to force everybody into wearing. The Bible encourages us to refuse this uniform and to do so aggressively, constantly, never becoming tired enough to just conform. What God gives us as an alternative is the gift of transformation — a renewing of the mind so thorough that, even while standing in the same soil as everyone else, what grows out of us looks unmistakably different.",
+      "Identity, therefore, has more to do with what is feeding our roots than where our feet are planted. To put it to the test: when there is clear disagreement between the world's pattern and God's word — whether on money, ambition, how to treat an enemy, what success means — which one moves you? If the answer is always the pattern around you, the soil has already won, regardless of how the leaves look. If the answer is increasingly the Word and will of God, even when it costs you standing or comfort, then you are a true citizen of Christ's kingdom."
+    ],
+    memVerse: "Do not be conformed to this world, but be transformed by the renewing of your mind.",
+    memRef: "Romans 12:2",
+    prayer: "Dear God, let me be rooted in You even while I stand in this world. Renew my mind daily, so that when the world's pattern and Your word disagree, it is Your word that moves me. Amen."
+  },
+  {
+    day: 5,
+    title: "You Are Ambassadors for Christ",
+    ref: "2 Corinthians 5:20",
+    opening: "Now then, we are ambassadors for Christ, as though God were pleading through us: we implore you on Christ's behalf, be reconciled to God. (2 Corinthians 5:20)",
+    body: [
+      "During the 1924 Paris Olympics, Eric Liddell was Great Britain's fastest sprinter and the heavy favourite to win gold in the 100-metre race. However, upon learning that the qualifying heats were scheduled for a Sunday, he withdrew from the race due to his convictions regarding the Sabbath. Years later, he gave up running altogether and returned to China as a missionary. He died there in 1945, in a Japanese internment camp, having spent his final years teaching, encouraging fellow prisoners, and giving away food rations to children and the weak.",
+      "While on the track, Liddell represented Britain. Everywhere else, this faithful man represented Christ. And when there was a clash between the first and the second, he chose Christ and continued to do so all the days of his life.",
+      "This is the picture behind 2 Corinthians 5:20. An ambassador does not invent their own message or pursue their own agenda. They carry the position, the authority, and the words of the one who sent them. As believers in Christ, we are sent into the world the same way Christ was sent by the Father (John 17:18, 20:21). Every nation we belong to is, in this sense, a posting. We serve where we are sent, but the message we carry — and the One we represent — is never our own."
+    ],
+    memVerse: "As You sent Me into the world, I also have sent them into the world.",
+    memRef: "John 17:18",
+    prayer: "Dear God, let me carry Your message faithfully wherever I am sent. May my life plead Your case before the people I am placed among. Amen."
+  },
+  {
+    day: 6,
+    title: "Pray for All People, Especially Leaders",
+    ref: "1 Timothy 2:1–2",
+    opening: "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men; for kings, and for all that are in authority. (1 Timothy 2:1–2)",
+    body: [
+      "In our Bible reference today, the Holy Spirit, through the apostle Paul, tells us why we need to pray for our leaders: so that we can live a quiet and peaceable life, in all godliness and honesty. In other words, our prayer for leaders is aimed at something we genuinely need — namely, the conditions of the very life we live under their governance. It is placed first, ahead of other requests, as though everything else we might ask for depends on getting this one right.",
+      "Did you know that this God-given duty does not wait for a leader to share our faith? In Ezra 6:10, we are told of a pagan king that commanded that sacrifices be offered and prayers made for his own life and that of his sons, by priests serving a God he had no allegiance to himself. The instruction to pray for him still stood, and the priests still carried it out. Darius did not need to believe what we believe for our prayer over his life and his rule to stand with God.",
+      "And believers are not allowed to be mischievous and argue that the Lord did not tell us what to say in prayer. Here is Psalm 72:1–2 demonstrating that we can — and should — ask God to give the king justice and righteous judgment, so that he may defend the cause of the poor and judge the people rightly. While we pray for the personal safety of leaders, we also pray that God directs them on caring for the people under them. All of this rests on the fact that the king's heart is in the hand of the Lord, like channels of water, turned wherever He directs (Proverbs 21:1). Whatever heart sits on whatever throne remains within reach of God."
+    ],
+    memVerse: "The king's heart is in the hand of the Lord, as the rivers of water: he turneth it whithersoever he will.",
+    memRef: "Proverbs 21:1",
+    prayer: "Dear God, I bring those in authority over me before You today. Turn their hearts toward justice, especially for the vulnerable, and grant us the quiet, peaceable life Your word promises is possible. Amen."
+  },
+  {
+    day: 7,
+    title: "Seek the Peace of the Nation in Prayer",
+    ref: "Jeremiah 29:7",
+    opening: "And seek the peace of the city whither I have caused you to be carried away captives, and pray unto the Lord for it: for in the peace thereof shall ye have peace. (Jeremiah 29:7)",
+    body: [
+      "Today's opening passage has us looking at a people God is speaking to — a people who did not choose where they found themselves. They were exiles, carried into a city that was never theirs, under a king they did not vote for, in a season they might not have wished on their wickedest enemies. And it is precisely there, in that displacement, that God tells them to seek the peace of that city and pray for it.",
+      "Notice that the Lord God does not allow them to treat their own peace as separate from the city's. He binds the two together so tightly that seeking one becomes the only way to find the other. From another angle, it might have been that in God's eyes, they were held captive in that place because its prosperity determined their prosperity. And God wanted it exactly like that, whether or not they felt that the place deserved their prayers.",
+      "Like in yesterday's devotional, God has also prescribed the content of the prayer: peace within the walls of the nation, plus prosperity within its palaces (Psalm 122:6–7). Since the need is specific, why should the prayer be vague?",
+      "If we want our nation to rejoice, by Biblical standards, the righteous within it need to bless it (Proverbs 11:10–11). If our godly presence in the nation is passive, everything will be decided by ungodly presences, with their ungodly voices and ungodly desires. It truly is a contest of voices, which gives our prayer additional weight. We thus obey what God has told us to seek, even from inside the very places we did not choose."
+    ],
+    memVerse: "Pray for the peace of Jerusalem: they shall prosper that love you.",
+    memRef: "Psalm 122:6",
+    prayer: "Dear God, let this nation be peaceful. Let the voices of those that oppose your counsel be silenced. Amen."
+  },
+  {
+    day: 8,
+    title: "Dominion Belongs to the Lord",
+    ref: "Psalm 22:28",
+    opening: "For dominion belongeth unto the Lord: and he is the governor among the nations. (Psalm 22:28)",
+    body: [
+      "Some Bible verses have a melodious tone when we quote them, but they leave a bitter taste when we try to believe them. Psalm 22:28 is one such verse. Does it really say that dominion belongs to the Lord, and He is governor among the nations? Note that the nations being referenced here are not only the calm or stable ones. And the Lord is THE governor. Full stop.",
+      "Even if everybody believed this in the past, we would forgive Daniel if he refused. After all, his nation had been conquered, with his temple in ruins, his own future decided by the decree of a foreign king. By every visible measure available to him, dominion clearly belonged to Babylon. Yet, in Daniel 4:17, we have the same man pronouncing judgment on Nebuchadnezzar himself, declaring that the Most High rules the kingdom of men and gives it to whomever He chooses, even to the lowest of men.",
+      "What did Daniel know that we are still struggling to hold onto? If Daniel was reasoning from his present circumstances, he would have had nothing to stand on. Therefore, he would have reasoned from a longer memory — the record of how God had always raised up and torn down kings on His own terms, long before Babylon ever existed.",
+      "This is what our prayers are missing whenever they rise and fall with how strong or chaotic a season feels. We end up giving fear and attention to whatever looks unstoppable in the moment, rather than to the One who actually is. Daniel's conviction did not wait for safer ground to stand on. Why should ours? Do we not have the same God?"
+    ],
+    memVerse: "And he changes the times and the seasons: He removes kings, and sets up kings.",
+    memRef: "Daniel 2:21",
+    prayer: "Dear God, I am reminded that no throne, no power, no chaos sits outside Your dominion. Let my prayers rise from confidence in who still governs, not fear of what I see. Amen."
+  },
+  {
+    day: 9,
+    title: "Daniel Stood in the Gap for His Nation",
+    ref: "Daniel 9:3",
+    opening: "So I set my face toward the Lord my God to seek Him by prayer and supplications, with fasting, sackcloth, and ashes. (Daniel 9:3)",
+    body: [
+      "When Daniel decided to pray, it came on the heels of Jeremiah's declaration decades earlier that the exile would last seventy years and then end. By Daniel's own calculation, that number was something God had committed in writing, and it was nearly up. So why pray at all? If the ending was already settled, what was left for prayer to accomplish?",
+      "This is the question every person who has prayed for a nation eventually runs into, in one form or another. We pray for change, for years, sometimes for a lifetime, and wonder whether the prayer is doing anything that wasn't already going to happen, or that isn't simply never going to happen.",
+      "Daniel had the opposite problem and prayed anyway. He had every reason to assume the outcome was secure, and he still gave himself to fasting, sackcloth, and an extended confession that runs sixteen verses long. What Daniel seemed to understand is that prayer was never primarily about producing an outcome. It was the way he placed himself rightly inside a promise that was already moving toward its fulfilment.",
+      "This is what it means to stand in the gap. It is not always because something is broken and needs to be fixed through enough prayer. Sometimes, it is that someone needs to be present, humbled, and accountable for a people while God's word does what it already said it would do."
+    ],
+    memVerse: "We do not present our supplications before You because of our righteous deeds, but because of Your great mercies.",
+    memRef: "Daniel 9:18",
+    prayer: "Dear God, let me come before You for this nation not because I doubt what You have promised, but because I want to stand rightly inside it. Amen."
+  },
+  {
+    day: 10,
+    title: "The Effective Prayer of a Righteous Person",
+    ref: "James 5:16",
+    opening: "The effectual fervent prayer of a righteous man availeth much. (James 5:16)",
+    body: [
+      "When the apostle James wanted to back up the statement that forms our Bible reference, he reached immediately for an incredulous example: Elijah — the man who, in his days, closed the sky for three and a half years through prayer. Then James, by the Spirit, calls Elijah a man with a nature like ours.",
+      "It is easy to read about a prophet who altered the weather of an entire nation and quietly assume he belonged to a different category of believer — someone with a direct line to heaven that ordinary people simply lack. James removes that assumption directly. If Elijah has the same nature we have, it means he carried similar passions, similar struggles, similar human limitations.",
+      "So what does \"righteous\" mean here, if Elijah was so ordinary? The Bible teaches that it points to a life rightly aligned with God, sincere in its dealings with Him — the kind 2 Chronicles 7:14 describes as people who humble themselves and turn from their own ways before they ever bring a request. In other words, the reason the prayer carries power is that something has been set right between that person and God first.",
+      "This dismantles the most common excuse for hesitant prayer over our nation. God is not waiting for someone holier, more equipped, more spiritually advanced than we feel ourselves to be. Elijah was a man like us, and — because of his relationship with God — moved heaven anyway."
+    ],
+    memVerse: "Elijah was a man with a nature like ours, and he prayed earnestly... and the earth produced its crops.",
+    memRef: "James 5:17–18",
+    prayer: "Dear God, give me the confidence to pray boldly for this nation. Make my life right before You, and let that be enough. Amen."
+  },
+  {
+    day: 11,
+    title: "All Authority Comes from God",
+    ref: "John 19:11",
+    opening: "You would have no power over me at all, unless it were given to you from above. (John 19:11)",
+    body: [
+      "The words of the Lord Jesus are often heavy and jaw-wrenching. Imagine what He says to Pontius Pilate in John 19:11 — the man holding the legal power to crucify Him, in the very room where that decision was about to be made. Standing before unjust judgment, facing a sentence He did not deserve, Jesus confirms Pilate's authority and traces its source straight back to God.",
+      "This is a far harder example to sit with than the comfortable ways we usually talk about authority coming from God. Anybody can say the same thing about a ruler who is wise and fair. But imagine saying this about someone who, in our estimation, is cruel, selfish, uncaring. But we have to take it as it is — as the Lord said it.",
+      "Our consolation is that authority being from God comes paired with accountability for how it is used. Every exercise of it answers to the One who gave it. This is the truth behind Romans 13:1 — all authority appointed by God — and Proverbs 8:15–16, kings reigning and judges judging by Him. Power exercised wrongly still answers to the One whose name it borrowed.",
+      "Whether the person in power believes it or not, that is their business. Our business is to believe it and respond to circumstances as such."
+    ],
+    memVerse: "By me kings reign, and princes decree justice.",
+    memRef: "Proverbs 8:15",
+    prayer: "Dear God, let me honour the authority You have permitted, trusting that You alone hold every one of them accountable for how it is used. Amen."
+  },
+  {
+    day: 12,
+    title: "Submit for the Lord's Sake",
+    ref: "1 Peter 2:13–14",
+    opening: "Submit yourselves for the Lord's sake to every human institution, whether to the emperor as supreme, or to governors sent by him. (1 Peter 2:13–14)",
+    body: [
+      "Peter wrote the instruction in our Bible reference today during the reign of Nero — a man remembered for using Christians as human torches to light his own gardens. This was the government Peter asked believers to submit to. Take a few seconds to think about that.",
+      "He then locates the reason for submission in a single phrase: \"for the Lord's sake.\" In other words, the motive sits entirely in our worship of the Lord, regardless of what the ruler in front of us has done to earn or forfeit our respect.",
+      "This is why 1 Peter 2:15 ties our submission to a visible outcome — that by doing good we silence the ignorant talk of foolish people. Believers who lived honourably under a hostile regime were demonstrating something true about the God they served, even while that government treated them harshly in return.",
+      "As if anticipating that someone would argue that it was Peter's thoughts and not the Lord's, the same instruction is carried forward in Titus 3:1 — be ready to do good works, subject to authorities, with the motive resting entirely in the One we ultimately answer to. Let us submit for the Lord's sake. Let us live honourably, knowing that this is for the Lord's sake."
+    ],
+    memVerse: "Submit yourselves for the Lord's sake to every human institution.",
+    memRef: "1 Peter 2:13",
+    prayer: "Dear God, let my submission to those over me be an act of worship to You, flowing from my devotion rather than their worthiness. Amen."
+  },
+  {
+    day: 13,
+    title: "Rebelling Against Authority is Rebelling Against God",
+    ref: "Romans 13:2",
+    opening: "Whoever resists the authority resists the ordinance of God, and they that resist shall receive to themselves judgment. (Romans 13:2)",
+    body: [
+      "When we think of rebelling against authority, rarely do some of us think about the strange story that Jude drops in his epistle. According to him, Michael the archangel, disputing directly with the devil over the body of Moses, refused to bring even a railing accusation against him; he simply said, \"The Lord rebuke you,\" and left the verdict entirely in God's hands.",
+      "Consider what is happening here. Michael was not arguing with a human government or an earthly ruler. He was face to face with the devil himself, in a dispute where he had every reason and every right to unleash the full weight of his authority. And he restrained himself anyway, leaving judgment to the One who actually holds it.",
+      "Jude brings this up to expose people who speak evil of dignities with a casualness an archangel would never permit himself. So, when we read Romans 13:2, we are right to interpret it literally: that resisting an authority is the same as resisting an ordinance — something established and owned by God, not by the person currently occupying the position.",
+      "Here again, we must call up Titus 3:1–2. Even in daily speech, be ready to do every good work, speaking evil of no one. The restraint Michael showed toward the devil is the same restraint we are asked to show toward authorities far less menacing than he was."
+    ],
+    memVerse: "Yet Michael the archangel... durst not bring against him a railing accusation, but said, The Lord rebuke thee.",
+    memRef: "Jude 1:9",
+    prayer: "Dear God, give me the same restraint Michael showed, leaving judgment over those in authority in Your hands rather than my mouth. Amen."
+  },
+  {
+    day: 14,
+    title: "Give to Caesar What Belongs to Caesar",
+    ref: "Matthew 22:21",
+    opening: "Render therefore unto Caesar the things which are Caesar's; and unto God the things that are God's. (Matthew 22:21)",
+    body: [
+      "In Matthew 22, the Pharisees handed the Lord Jesus a coin to trap Him. If He said the tax was unlawful, He would be branded a rebel against Rome. If He said it was lawful, He would lose the crowd who hated paying it. Either answer would cost Him. The Lord asked a simple question instead: whose image is on this coin? Caesar's, they answered.",
+      "The coin carried Caesar's likeness because Caesar had minted it. It belonged to him the way anything stamped with a maker's image belongs to its maker. The phrase \"render to Caesar\" gets misused often, stretched to justify all kinds of compromise in the name of civic duty. But the Lord Jesus was specific.",
+      "According to Him, Caesar gets what bears his image — a coin he made and stamped with his own face; God gets what bears His image, which is every human soul, made and stamped by Him long before any government existed (Genesis 1:27). These claims run along entirely different lines.",
+      "Paying tax to a government is giving Caesar his coin back. It says nothing about who owns your conscience, your worship, or your obedience to God, because none of those things were ever Caesar's to begin with. You ought to pay tax and other legal dues, because those collecting it are serving a purpose permitted by God Himself."
+    ],
+    memVerse: "Render therefore unto Caesar the things which are Caesar's; and unto God the things that are God's.",
+    memRef: "Matthew 22:21",
+    prayer: "Dear God, let me give to my nation what genuinely belongs to it, while keeping clear in my heart what has always and only belonged to You. Amen."
+  },
+  {
+    day: 15,
+    title: "Give Honour to Whom Honour is Due",
+    ref: "Romans 13:7",
+    opening: "Render therefore to all their dues... honour to whom honour. (Romans 13:7)",
+    body: [
+      "Have you ever paid attention to what the apostle Peter does in 1 Peter 2:17? In a single verse, he lays out four different instructions side by side, and none of them are interchangeable with the others. This precision is the point.",
+      "Honour for everyone is broad and general — the basic dignity owed to every person made in God's image. Love for the brotherhood is warmer and closer, reserved for fellow believers. Fear belongs to God alone, a category nothing else shares. And honour for the king sits in its own place too, neither collapsed into general courtesy nor elevated into the reverence owed only to God.",
+      "What about Proverbs 24:21 which pairs fearing the Lord with honouring the king in the same breath, while warning against association with those given to change and restless rebellion against settled order? The two postures sit together comfortably because they were never competing for the same level of devotion.",
+      "We see the same precision applied in 1 Timothy 6:1 to servants under harsh masters, counting them worthy of honour — not because the master has necessarily earned it, but because honour given rightly protects the name of God being represented through that conduct. In private and public life, let us make it our aim to fear God, love our brethren, and honour our leaders."
+    ],
+    memVerse: "Honour all men. Love the brotherhood. Fear God. Honour the king.",
+    memRef: "1 Peter 2:17",
+    prayer: "Dear God, teach me to give each person and each authority their rightly weighted due, honouring rightly without confusing what belongs only to You. Amen."
+  },
+  {
+    day: 16,
+    title: "Live Peacefully with All Men",
+    ref: "1 Thessalonians 4:11",
+    opening: "To make it your ambition and definitely endeavour to live quietly and peacefully, to mind your own affairs, and to work with your hands, as we charged you. (1 Thessalonians 4:11, AMPC)",
+    body: [
+      "A practical take on living peacefully with people acknowledges that there are people who still ruffle our feathers — people that make it hard to maintain a peaceful life and especially make our outbursts and conflicts feel justifiable. For this, Scripture gives a solution.",
+      "The apostle Paul says in Romans 12:18 that as much as is up to you, live in peace with all men. The key phrase there is \"as much as is up to you.\" We cannot control how another person behaves, but we are fully responsible for our own part in keeping peace. That means showing kindness, being gentle (even without compromise), being patient, and minding our own business.",
+      "It also means communicating effectively, and setting and respecting boundaries. These form the foundation for true peace — the part that depends on us alone. Sometimes, this requires a careful analysis of ourselves. Perhaps the way we respond, the jokes we say, or our indifference to situations because they do not affect us — all of these have a way of possibly setting us against others.",
+      "Peace is not just to be sought for in still waters but also in troubled waters. Even with all of these measures in place, there is still a possibility of being caught up in conflict, because we cannot determine how another person will react. Our part, however, is made clear: we must pursue being at peace with everyone, whatever they think of us."
+    ],
+    memVerse: "If possible, so far as it depends on you, be at peace with all men.",
+    memRef: "Romans 12:18",
+    prayer: "Lord Jesus, help me be committed to living peacefully with everyone, without bias. I know I let myself be kept on edge by the actions and speech of others so I ask that you grant me patience. I also ask that you help me in correcting every wrong character of mine that stands in the way. Amen."
+  },
+  {
+    day: 17,
+    title: "Work for the Welfare of Your City",
+    ref: "Genesis 39:2–5",
+    opening: "The Lord was with Joseph, so he became a successful man... the Lord's blessing was upon all that he owned, in the house and in the field. (Genesis 39:2–5)",
+    body: [
+      "Many are neglectful of the collective wellbeing of their communities. It is why we have scenarios of people looting grants that are supposed to be beneficial to the whole people, poorly erected structures that save costs but risk lives, and even littering that contributes to an unclean and unhealthy environment in the long run.",
+      "For Joseph, though he was sold as a slave, he worked. The fruit of this was the prosperity of all he did and the prosperity of Potiphar's household. In a sense, the prosperity of Potiphar's household was the prosperity of Joseph. In the same manner, the prosperity of the Israelites lay in the prosperity of their captor's nation.",
+      "When it comes to the well-being and flourishing of a community, apathy and negligence are always the wrong approach. We can, in fact, find a biblical basis for this in God's instruction to the Israelites He was sending into exile (Jeremiah 29:7). If they were expected to do that much for their captors, how much more should we do for our own nation.",
+      "The same is applicable to us. Let us be faithful believers heeding the instructions of our Lord. Let us actively seek the welfare of our communities and nations."
+    ],
+    memVerse: "Seek the welfare of the city where I have sent you into exile, and pray to the Lord on its behalf; for in its welfare you will have welfare.",
+    memRef: "Jeremiah 29:7",
+    prayer: "Dear Lord, teach me to look out for my city and grant me the grace to be diligent in my endeavours. I also pray that You will make prosperous the works done. Amen."
+  },
+  {
+    day: 18,
+    title: "Righteousness Exalts a Nation",
+    ref: "Proverbs 29:2",
+    opening: "When the righteous increase, the people rejoice, But when a wicked man rules, people groan. (Proverbs 29:2)",
+    body: [
+      "What qualifies as righteousness, after new birth, is the uncompromising and non-negotiable approach towards the law of God. It is the direction and foundation. For a nation to enjoy peace and prosperity and be reckoned in God's sight as good, righteousness has to be the order of the day.",
+      "It is the people who honour God and His instruction that will look out for one another, exhibit and appropriate wisdom, and shun temptations that will erode a good national structure. These are among the many things necessary for a successful nation.",
+      "The exaltation of a nation connotes things like an equitable economy and a good reputation — basically prowess in endeavours. There are certain nations whose reputation is marred as a result of the activities of its citizens. For others, their economies bear the direct negative consequences.",
+      "Any nation that seeks to be exalted will, first of all, have to exalt righteousness. In other words, that nation has to make it a custom to do the will of God. Every believer in Christ must believe, live, and teach this."
+    ],
+    memVerse: "Righteousness exalts a nation, but sin is a disgrace to any people.",
+    memRef: "Proverbs 14:34",
+    prayer: "Dear Jesus, I pray not only for myself but for my country: that seeds of righteousness will be planted; that they will be fruitful; that many trees of righteousness will be seen all over; that we will do what is required of us; and that we seek obedience every day. Amen."
+  },
+  {
+    day: 19,
+    title: "Be Ready to Do Every Good Work",
+    ref: "Titus 3:1",
+    opening: "Remind them to be subject to rulers and authorities, to obey, to be ready for every good work. (Titus 3:1)",
+    body: [
+      "God's call to believers is not merely to avoid wrongdoing, but to actively pursue good works. As believers we must have a heart prepared to serve, help, and make a positive impact whenever opportunities arise. We are called to be known not just by our words, but by lives marked by kindness, integrity, obedience to authorities, and service to the nation.",
+      "This message is especially relevant in Nigeria today. While many are quick to point out the nation's challenges, God calls His people to be part of the solution. Galatians 6:10 urges us to do good to all people whenever we have the opportunity, while 1 Timothy 6:18 encourages believers to be rich in good works and generous in spirit.",
+      "Whether through honest work, helping the needy, mentoring the young, praying for our leaders, or refusing to participate in corruption, every act of goodness contributes to the healing and strengthening of our nation. Let us do good and share with others, knowing that these are sacrifices that please God (Hebrews 13:16).",
+      "If a nation like ours will be transformed, it will not be because the people complained but because believers are consistently reflecting Christ in their daily lives. As we yield ourselves to God, may we become instruments of righteousness, bringing light, hope, and godly influence wherever He has placed us."
+    ],
+    memVerse: "As we have therefore opportunity, let us do good unto all men, especially unto them who are of the household of faith.",
+    memRef: "Galatians 6:10",
+    prayer: "Lord, make me ready for every good work. Help me to be a blessing to my community and a positive influence in Nigeria. Amen."
+  },
+  {
+    day: 20,
+    title: "You Are the Salt of the Earth",
+    ref: "Matthew 5:13",
+    opening: "You are the salt of the earth; but if the salt loses its flavour, how shall it be seasoned? It is then good for nothing but to be thrown out and trampled underfoot by men. (Matthew 5:13)",
+    body: [
+      "As believers in Christ, God has called us salt because of our responsibility to influence the world positively. Salt preserves, purifies, and adds flavour. In the same way, Christians are called to preserve godly values, promote righteousness, and bring hope to a world that is increasingly drifting from God's standards.",
+      "Our nation faces serious challenges — including corruption, injustice, moral decline, and division. Rather than blending into these problems, believers are called to be agents of change. Through honesty, integrity, compassion, and godly conduct, Christians can help preserve what is good and point others toward Christ.",
+      "As Colossians 4:6 teaches, our words should be gracious and seasoned with salt, bringing wisdom, encouragement, and healing to those around us.",
+      "The Lord Jesus warned that salt which loses its saltiness becomes useless (Luke 14:34–35). When believers compromise their faith and adopt the values of the world, they lose their effectiveness and influence. What God desires is that His people remain distinct, maintaining their witness in every sphere of society. It is when we live faithfully and reflect Christ daily that we become the preserving and transforming influence that our communities and nation desperately need."
+    ],
+    memVerse: "Ye are the salt of the earth: but if the salt have lost his savour, wherewith shall it be salted?",
+    memRef: "Matthew 5:13",
+    prayer: "Father, help me to remain a faithful witness for Christ. Let my life, words, and actions preserve godly values and bring positive change to my community and Nigeria in Jesus' name. Amen."
+  },
+  {
+    day: 21,
+    title: "You Are the Light of the World",
+    ref: "Matthew 5:14",
+    opening: "You are the light of the world. A city that is set on a hill cannot be hidden. (Matthew 5:14)",
+    body: [
+      "The Lord Jesus declared that those who follow Him are the light of the world. What does light do? It dispels darkness, reveals truth, and provides direction. As believers in Christ, we are called to reflect the character of Christ through our words, actions, and lifestyle, letting our good works shine before others so that God is glorified (Matthew 5:16).",
+      "What this looks like is what Philippians 2:15–16 specifies: that we shine as lights in the midst of a crooked and perverse generation, holding fast to the word of life, even while everything around us grows darker. God has called us to shine in our homes, workplaces, schools, churches, and communities.",
+      "Also, the light is not permitted to be simply quiet and private. We are called to arise and shine because the glory of the Lord has risen upon us, visible enough for nations to see (Isaiah 60:1–3). It is those that lead others to righteousness that shine like the stars forever (Daniel 12:3).",
+      "It is when believers faithfully proclaim the gospel and live lives that honour God that they become beacons of hope to their nation and generation. Every nation needs Christians who will not hide their light but will boldly shine for Christ, bringing transformation wherever God has placed them. Let us be such Christians."
+    ],
+    memVerse: "Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven.",
+    memRef: "Matthew 5:16",
+    prayer: "Father, let Your light shine through me. Help me to be a godly example in my words, actions, and character. Amen."
+  },
+  {
+    day: 22,
+    title: "Speak Up for Those Who Cannot Speak",
+    ref: "Isaiah 1:17 / Micah 6:8",
+    opening: "Learn to do good; Seek justice, Reprove the ruthless, Defend the orphan, Plead for the widow. He has told you, O man, what is good; And what does the Lord require of you but to do justice, to love kindness, and to walk humbly with your God? (Isaiah 1:17; Micah 6:8)",
+    body: [
+      "The self-seeking nature of man exhibits itself many times by rendering others vulnerable and helpless. An instance of this can be found in Isaiah 58:3 where the Lord reproves people who were employers of labour but were oppressors too. The oppressed are those who are exploited, harmed, or burdened by abuse of authority and power. It is an all-too-common sight: people are cheated out of a liveable wage, their rights trampled upon by reason of race or gender or any of the other justifications that oppressors give.",
+      "As believers in Christ, one thing that is obvious is that advocacy is the Lord's desire. But this advocacy does not have to be hateful retorts or violent actions. Scripture provides a framework of advocacy for us, as we see in Isaiah 1:17: defending and speaking up for the vulnerable, as well as reproving the oppressors.",
+      "As much as history shows the soiled stories, we also hear of believers who stuck out for saving babies left to die, believers who fought hard against slavery, men like John Wesley who insisted and pushed for prison reform. All of this to say that indifference is absolutely not piety.",
+      "Advocacy is not unrighteousness because there are righteous ways it can be done. The will of God for us, even while conforming to the image of Christ, is that we exhibit fairness and justice and empathy, sympathising with those we ought to."
+    ],
+    memVerse: "Open your mouth for the mute, for the rights of all the unfortunate. Open your mouth, judge righteously, and defend the rights of the afflicted and needy.",
+    memRef: "Proverbs 31:8–9",
+    prayer: "Lord, help me to look out for those that need my help, who You have placed in my vicinity. I may not be able to fix all the brokenness of the world, but I certainly can play a role. Grant me courage and boldness. Amen."
+  },
+  {
+    day: 23,
+    title: "Expose the Works of Darkness",
+    ref: "Ephesians 5:11",
+    opening: "Have no fellowship with the unfruitful works of darkness, but rather expose them. (Ephesians 5:11)",
+    body: [
+      "It is very tempting to read the first part of our Bible reference and run with only it. We would then preach it to other believers: have no fellowship with darkness, avoid it, stay clean, keep your own hands unstained. This is a manageable position, to be honest. It is a safe and cushy position.",
+      "Except, the second half of the statement asks us for something that is neither safe nor cushy. Expose the works of darkness, it says. The Greek word behind 'expose' means to bring something hidden into the light; to convict; to name a wrong so clearly that it can no longer hide behind ambiguity. It was a duty to have nothing to do with the deeds of darkness, yes, but also an obligation to reprimand them.",
+      "If we only avoid the darkness, it would be undisturbed, free to keep operating wherever no one is willing to name it. But because the night is far gone and the day is at hand, we are to cast off the works of darkness and put on the armour of light (Romans 13:12).",
+      "Keep in mind what Isaiah 5:20 says: that there are people who call evil good and good evil, who confuse light and darkness. Even these must be confronted and exposed to the light. As believers in Christ, we are neither here to make people comfortable nor cushion darkness, whatever form it takes. Let us make it our aim to expose darkness, so that the light that Christ brings can do its work (John 3:20–21)."
+    ],
+    memVerse: "Have no fellowship with the unfruitful works of darkness, but rather expose them.",
+    memRef: "Ephesians 5:11",
+    prayer: "Dear God, give me the courage to do more than avoid darkness. Let me name it clearly when You call me to, even when silence would be easier. Amen."
+  },
+  {
+    day: 24,
+    title: "The Courage to Stand Alone",
+    ref: "Isaiah 51:7b (BSB)",
+    opening: "Do not fear the scorn of men; do not be broken by their insults. (Isaiah 51:7b, BSB)",
+    body: [
+      "Is fear irrational? Not according to our Bible reference today. Long before the Lord Jesus said this to His disciples, the prophet Isaiah noted that people who hold to righteousness will be reproached, mocked, and treated with contempt for it — and the instinct to flinch under that pressure is a real thing.",
+      "But look at what Isaiah 51:8 says: the moth shall eat them up like a garment, the worm shall eat them like wool, but God's righteousness shall stand forever. In other words, the very people whose opinions feel so threatening are made of material that disintegrates; their reproach has a shelf life. But what we, believers in Christ, are standing on neither decays nor declines in value and strength.",
+      "No wonder Proverbs 29:25 teaches us that the fear of man brings a snare, but whoever trusts in the Lord shall be safe. The Contemporary English Version rendition of this verse is genuinely provocative: \"Don't fall into the trap of being a coward — trust the LORD, and you will be safe.\" To which Matthew 10:28 adds that we should fear the One who holds the soul, not the one who can only touch the body.",
+      "All of this is to say that we should not be afraid to confront evil. It is one of the believer's duties to their nation. Moreover, it is not as if we are truly alone. We are standing with the One whose righteousness outlasts every voice raised against it."
+    ],
+    memVerse: "God has said: \"Never will I leave you, never will I forsake you.\" So we say with confidence: \"The Lord is my helper; I will not be afraid. What can man do to me?\"",
+    memRef: "Hebrews 13:5–6",
+    prayer: "Dear God, when the reproach of people presses in on me, remind me that their words are moth-eaten cloth and Your righteousness stands forever. Give me courage to stand, even seemingly alone. Amen."
+  },
+  {
+    day: 25,
+    title: "We Must Obey God Rather Than Men",
+    ref: "Acts 5:29",
+    opening: "We ought to obey God rather than men. (Acts 5:29)",
+    body: [
+      "When the council ordered Peter and John to stop speaking about Jesus, they responded simply but clearly: we cannot but speak the things which we have seen and heard. Take note that this was neither defiance for its own sake nor the invention of something with which to push back against authority. They were reporting what their own eyes and ears had already witnessed, and obeying the council's order would have required denying that reality entirely.",
+      "This is a different kind of refusal than simple rebellion. More than anything, it is the recognition that some commands ask believers to unsee what they have already seen, to unknow what they already know — and that this is a line no instruction from any human authority can move.",
+      "Daniel was under the same pressure, as were Shadrach, Meshach, and Abednego. Saying no to the king, they were sentenced to their respective valleys of death: one to a den of lions, the others to a pit of flames. Were they people who wanted to disobey the king for the fun of it? No. But the command of the king contravened the command of God.",
+      "This is the line every believer eventually meets in some form — the moment a human instruction directly contradicts what God has already shown to be true. When that line appears, the answer should have already been settled long before the question was ever asked."
+    ],
+    memVerse: "We ought to obey God rather than men.",
+    memRef: "Acts 5:29",
+    prayer: "Dear God, when human instruction asks me to deny what You have shown me to be true, give me the clarity and courage to obey You first. Amen."
+  },
+  {
+    day: 26,
+    title: "Overcome Evil with Good",
+    ref: "1 Thessalonians 5:15",
+    opening: "See that no one renders evil for evil to anyone, but always pursue what is good both for yourselves and for all. (1 Thessalonians 5:15)",
+    body: [
+      "When people treat us unfairly, as ordinary human beings, our first instinct is almost always to get even. We want them to feel the same pain they caused us. But, as God's people, we are not ordinary people. Because of this, He calls us to a different response.",
+      "It is interesting that in Romans 12:19–21, the Bible informs us that vengeance belongs to the Lord. What then is our part? It is not to repay evil with evil but to overcome evil with good and — according to the apostle Peter — with blessing (1 Peter 3:9–11).",
+      "It is true that doing good is rarely easy. It is even harder when the offence is deep and fresh. But God does not ask us to wait for time to heal our wounds or design our response to offence based on its severity. He says, in effect, \"Leave vengeance for Me and do good.\"",
+      "The standard does not change simply because the offence or evil came from family members or close friends, neighbours, colleagues, or strangers. It is the same to all people. It is a sign that we trust God and believe that He will judge all things righteously. By so doing, believers represent God among people who believe in retaliation and an eye for an eye."
+    ],
+    memVerse: "Be not overcome of evil, but overcome evil with good.",
+    memRef: "Romans 12:21",
+    prayer: "Dear Lord, help me guard my heart from revenge, and teach me to reflect Your goodness even when I am treated unfairly. Amen."
+  },
+  {
+    day: 27,
+    title: "My Kingdom Is Not of This World",
+    ref: "John 6:15",
+    opening: "Therefore when Jesus perceived that they were about to come and take Him by force to make Him king, He departed again to the mountain by Himself alone. (John 6:15)",
+    body: [
+      "If you are a normal person, at some point in your life, you would desire influence, recognition, and success. Is this desire wrong or anti-God? Not necessarily so. But it hides a danger: it can quietly, very quietly, take the place of God in your heart.",
+      "The Lord Jesus knew this to be true. When Satan offered Him the kingdoms of this world, He refused. When the crowd of cheering and grateful people came to make Him king — mind you, they did not do it out of malice — the Lord Jesus withdrew Himself from them. Why? Because being king is wrong? No; because it was outside the Father's will for Him.",
+      "It becomes even clearer when He stands before Pilate, declaring, \"My kingdom is not of this world\" (John 18:36). Are we not the same? Do we not also, as believers in Christ Jesus, live in a world we do not belong to? Yes, we study, work, build families, serve our countries, and enjoy God's blessings with gratitude. But none of these things is allowed to become our highest pursuit.",
+      "After all, earthly kingdoms rise and fall; it is only God's Kingdom that is designed to exist forever. Let our hearts be set on our King; let us serve Him faithfully. While we function in different capacities in our nations, let us not forget that the earth is not our home."
+    ],
+    memVerse: "Jesus answered, My kingdom is not of this world.",
+    memRef: "John 18:36",
+    prayer: "Dear Lord, keep my heart fixed on Your Kingdom. Help me to use every earthly blessing wisely without allowing anything to take Your rightful place in my life. Amen."
+  },
+  {
+    day: 28,
+    title: "When They Chose God Over the King",
+    ref: "Daniel 3:6",
+    opening: "\"...whoever does not fall down and worship shall be thrown into the middle of a furnace of blazing fire.\" (Daniel 3:6)",
+    body: [
+      "What do you do when the king's command and God's command cannot both be obeyed? To follow a leader means trusting them to lead well. Scripture supports this, but only as far as the leading does not pull against God. The moment it does, allegiance must break. That is what Shadrach, Meshach, and Abednego stood before when they refused to bow (Daniel 3:16–18).",
+      "What about when a new decree forced worship of the king alone? Did Daniel even deliberate? No. As soon as he learned of it, he went to his room and prayed toward Jerusalem, just as he always had (Daniel 6:10). Someone else might have hidden his loyalty to bargain for safety. Not Daniel. He simply kept belonging to the Kingdom he had always belonged to.",
+      "In each case, the cost on the table was death. In each case, the reward was God's favour, earned by refusing anything less than full allegiance. Why? Because they knew where their ultimate citizenship lay. Earthly nationals, yes, but ambassadors first — of a Truer Kingdom and a Higher King.",
+      "We must carry the same mind. Our duty to our nation stands only as far as it does not contravene our citizenship in God's Kingdom. This earthly one is for a little while. That Heavenly one is for eternity. And our visa into it was purchased by the blood of the King. When the two nations' interests collide, the choice is no real contest."
+    ],
+    memVerse: "We ought to obey God rather than men.",
+    memRef: "Acts 5:29",
+    prayer: "Dear God, when the nation and Heaven pull in different directions, let there be no contest in my heart. I belong to Your Kingdom first. Let my life prove it, whatever it costs. Amen."
+  },
+  {
+    day: 29,
+    title: "We Look for a Heavenly Country",
+    ref: "Hebrews 13:14",
+    opening: "For here we have no continuing city, but we seek one to come. (Hebrews 13:14)",
+    body: [
+      "If you know that this world is not your home, will you stop caring about it? It is an old Christian debate. But let us look at what answer the Bible can lend to the discussion.",
+      "Hebrews 11:14–16 narrates that during the time of the patriarchs, they lived as strangers and pilgrims on the earth, seeking a country of their own. Notice what they did not do: withdraw from the cities they lived in, abandon their work, or treat their neighbours as insignificant or irrelevant people. More than anything, they longed for their true home — which is God's house — without becoming passive in the land they currently inhabited.",
+      "And 2 Corinthians 5:1–2 gives it to us straight: that even our body is a tent we groan in, waiting for a permanent house. Thus, we groan. And as citizens of an earthly nation, we groan, aching to enter and reside in our heavenly nation. And this is where the danger comes from — the danger of using Heaven as an excuse for earth. It is the danger of asking, \"Since my citizenship is elsewhere, why build, why serve, why care?\" It sounds spiritual, for sure, but it is actually disengagement in disguise.",
+      "From how the patriarchs lived, God expects us to live fully where He has planted us — that our hope of another country never becomes a reason to neglect this one. So, is our citizenship in Heaven? Absolutely! Philippians 3:20 settles that question. Still, our duty to this nation remains as long as we are here. We serve our nation as people who are not desperate for it to give us everything, because it was never meant to. We hold it loosely, serve it faithfully, and let our eyes stay fixed on the country still to come."
+    ],
+    memVerse: "But now they desire a better, that is, a heavenly country.",
+    memRef: "Hebrews 11:16",
+    prayer: "Dear God, let my longing for Your country never excuse me from faithfulness in this one. Teach me to hold what is temporary with open, working hands. Amen."
+  },
+  {
+    day: 30,
+    title: "We Await the Saviour from Heaven",
+    ref: "Philippians 3:20",
+    opening: "We also eagerly wait for the Saviour, the Lord Jesus Christ. (Philippians 3:20)",
+    body: [
+      "What does waiting for someone actually do to the way you live before they arrive? For us believers in Christ, grace has appeared, teaching us to live soberly, righteously, and godly in the present age, while we wait for the blessed hope — the appearing of our great God and Saviour. Thank God for Scriptures like Titus 2:11–13 where we are taught that our own waiting is instructive, even influencing how we live in the present rather than just giving us hope for later.",
+      "1 Thessalonians 1:10 makes the same point from a different angle. Paul commends a church for waiting for the Son from heaven, but the verses just before it describe a people known for their work of faith, labour of love, and reputation throughout the region. Were they sitting by, watching the sky? Or were they labouring while they waited, visibly demonstrated in how they lived among their neighbours?",
+      "This is the model for our duty to the nation. We are not citizens marking time until the Lord rescues us from this perverse age. We are citizens whose expectation of the Saviour produces a certain quality of life right now — soberness, integrity, visible good work — the kind 2 Peter 3:12–13 calls hastening the day by holy conduct.",
+      "The Saviour is coming to deliver us, yes. But while we wait, we do not stop being useful where we stand."
+    ],
+    memVerse: "To wait for His Son from heaven... even Jesus.",
+    memRef: "1 Thessalonians 1:10",
+    prayer: "Dear God, let my waiting for You be active. Let the hope of Your appearing be visible in how I live and labour today. Amen."
+  },
+  {
+    day: 31,
+    title: "The Kingdom That Will Never End",
+    ref: "Daniel 2:44",
+    opening: "And the kingdom shall not be left to other people; it shall break in pieces and consume all these kingdoms, and it shall stand forever. (Daniel 2:44)",
+    body: [
+      "Every nation we will ever serve has an expiration date; only one Kingdom does not. Daniel knew this better than most. He served Babylon, then Medo-Persia, with skill and integrity his entire life, rising to the highest offices a foreign king could offer. And yet it was this same Daniel who, in chapter two, told Nebuchadnezzar that every empire — including his — would eventually be broken and replaced by a Kingdom that would never end.",
+      "Yet the fact that Daniel knew that Babylon's days were numbered did not make him serve it any less. When he served, he did so fully and faithfully, all the while acknowledging that he belonged to another place. That is the model for everything this month has argued.",
+      "We pray for our nation, submit to its authority, work for its good, and stand against its evil — not because it is permanent, but because God placed us here for this time. Isaiah 9:6–7 and Luke 1:33 point us to the throne that never ends, the government that will never be overturned, fulfilled in Christ.",
+      "And if you have never recited the declaration of Revelation 11:15, now is the time to do so: the kingdoms of this world become the Kingdom of our Lord! So we hold two truths together until that day. Full engagement with the nation we are in; full allegiance to the Kingdom that is coming. There is no contradiction between the two: one is here now, the other is established in eternity, with only time between us and it."
+    ],
+    memVerse: "And the kingdoms of this world have become the kingdoms of our Lord and of His Christ.",
+    memRef: "Revelation 11:15",
+    prayer: "Dear God, let me serve where You have placed me without losing sight of where it is all going. I belong, finally, to the Kingdom that will never end. Amen."
+  }
+];
+
+// ─── Date Detection (Africa/Lagos, UTC+1) ─────────────────────────────────────────
+const nowLagos   = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+const todayYear  = nowLagos.getFullYear();
+const todayMonth = nowLagos.getMonth(); // 6 = July (0-indexed)
+const todayDay   = nowLagos.getDate();
+
+const JULY = 6, YEAR = 2026;
+let unlockedUpTo = 0; // highest day number accessible (0 = none)
+let archiveMode  = false;
+
+if (todayYear > YEAR || (todayYear === YEAR && todayMonth > JULY)) {
+  archiveMode  = true;          // The month is over — full archive
+  unlockedUpTo = 31;
+} else if (todayYear === YEAR && todayMonth === JULY) {
+  unlockedUpTo = todayDay;      // Lock everything after today
+}
+// Before July 2026: unlockedUpTo stays 0 — all locked
+
+// ─── Today Feature / Notice ──────────────────────────────────────────────
+const todayFeature  = document.getElementById('todayFeature');
+const featureNotice = document.getElementById('featureNotice');
+
+if (archiveMode) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
+} else if (unlockedUpTo === 0) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '🕊️ <strong>Still Waters Daily Devotional</strong> begins <strong>1 July 2026</strong>.<br>Come back then — a new devotional will unlock every day.';
+} else {
+  const todayData = data[unlockedUpTo - 1];
+  document.getElementById('todayFeatTitle').textContent = todayData.title;
+  document.getElementById('todayFeatRef').textContent   = todayData.ref;
+  document.getElementById('todayFeatBtn').addEventListener('click', () => openModal(unlockedUpTo - 1));
+  todayFeature.style.display = 'block';
+}
+
+// ─── Build Calendar Grid ───────────────────────────────────────────────────
+// July 2026: starts on Wednesday. Using Sun–Sat columns.
+// Sun=0, Mon=1, Tue=2, Wed=3 → 3 empty cells before day 1
+const grid = document.getElementById('calGrid');
+const START_DOW = 3; // Wednesday
+
+for (let i = 0; i < START_DOW; i++) {
+  const empty = document.createElement('div');
+  empty.className = 'cal-empty';
+  grid.appendChild(empty);
+}
+
+data.forEach(d => {
+  const isToday  = !archiveMode && (d.day === unlockedUpTo);
+  const isLocked = d.day > unlockedUpTo;
+
+  const card = document.createElement('div');
+  card.className = 'day-card' + (isToday ? ' today' : '') + (isLocked ? ' locked' : '');
+
+  if (!isLocked) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `July ${d.day}: ${d.title}`);
+    card.addEventListener('click', () => openModal(d.day - 1));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(d.day - 1); }
+    });
+  } else {
+    card.setAttribute('aria-label', `July ${d.day}: not yet available`);
+    card.setAttribute('aria-disabled', 'true');
+  }
+
+  card.innerHTML = `
+    <div class="day-num">${d.day}</div>
+    <div class="day-title">${d.title}</div>
+    ${isToday  ? '<div class="today-badge">Today</div>' : ''}
+    ${isLocked ? '<div class="lock-icon">🔒</div>' : (!isToday ? '<div class="day-dot"></div>' : '')}
+  `;
+
+  grid.appendChild(card);
+});
+
+// ─── Modal Logic ──────────────────────────────────────────────────────────
+let currentIdx = 0;
+const modal       = document.getElementById('modal');
+const modalClose  = document.getElementById('modalClose');
+const navPrev     = document.getElementById('navPrev');
+const navNext     = document.getElementById('navNext');
+const navIndicator = document.getElementById('navIndicator');
+
+function openModal(idx) {
+  currentIdx = idx;
+  renderModal();
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function renderModal() {
+  const d = data[currentIdx];
+  document.getElementById('modalDayBadge').textContent = `July ${d.day}`;
+  document.getElementById('modal-title-el').textContent = d.title;
+  document.getElementById('modalRef').textContent = d.ref;
+  document.getElementById('modalOpening').textContent = d.opening;
+  document.getElementById('modalBody').innerHTML = d.body.map(p => `<p>${p}</p>`).join('');
+  document.getElementById('modalMemVerse').textContent = d.memVerse;
+  document.getElementById('modalMemRef').textContent = d.memRef;
+  document.getElementById('modalPrayer').textContent = d.prayer;
+  navIndicator.textContent = `${currentIdx + 1} of ${data.length}`;
+  navPrev.disabled = currentIdx === 0;
+  navNext.disabled = currentIdx === data.length - 1;
+  // Scroll modal box to top
+  document.querySelector('.modal-box').scrollTop = 0;
+}
+
+modalClose.addEventListener('click', closeModal);
+navPrev.addEventListener('click', () => { if (currentIdx > 0) { currentIdx--; renderModal(); } });
+navNext.addEventListener('click', () => { if (currentIdx < data.length - 1) { currentIdx++; renderModal(); } });
+
+// Close on backdrop click
+modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+
+// Keyboard navigation
+document.addEventListener('keydown', e => {
+  if (!modal.classList.contains('active')) return;
+  if (e.key === 'Escape') closeModal();
+  if (e.key === 'ArrowLeft' && currentIdx > 0) { currentIdx--; renderModal(); }
+  if (e.key === 'ArrowRight' && currentIdx < data.length - 1) { currentIdx++; renderModal(); }
+});
+</script>
+</body>
+</html>
