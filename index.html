@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Still Waters | July 2026 — The Believer's Duty to the Nation</title>
+  <title>Still Waters | July 2026 — The Believer’s Duty to the Nation</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -210,14 +210,8 @@
       font-size: clamp(1.1rem, 3vw, 1.55rem);
       color: var(--cream);
       font-weight: 400;
-      margin-bottom: 6px;
+      margin-bottom: 16px;
       line-height: 1.3;
-    }
-    .today-feature-ref {
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 22px;
     }
     .today-feature-btn {
       background: var(--gold);
@@ -280,7 +274,7 @@
     <div class="edition-badge">July 2026 Edition</div>
     <h1>Still Waters</h1>
     <p class="header-sub">Daily Devotional</p>
-    <p class="header-theme">The Believer's Duty to the Nation</p>
+    <p class="header-theme">The Believer’s Duty to the Nation</p>
   </header>
 
   <main>
@@ -290,7 +284,6 @@
     <div id="todayFeature" class="today-feature" style="display:none;">
       <div class="today-feature-label">📅 Today’s Devotional</div>
       <h2 class="today-feature-title" id="todayFeatTitle"></h2>
-      <p class="today-feature-ref" id="todayFeatRef"></p>
       <button class="today-feature-btn" id="todayFeatBtn">Read Today’s Devotional →</button>
     </div>
     <div id="featureNotice" class="feature-notice" style="display:none;"></div>
@@ -376,7 +369,6 @@ if (archiveMode) {
 } else {
   const todayData = data[unlockedUpTo - 1];
   document.getElementById('todayFeatTitle').textContent = todayData.title;
-  document.getElementById('todayFeatRef').textContent   = todayData.ref;
   document.getElementById('todayFeatBtn').addEventListener('click', () => openModal(unlockedUpTo - 1));
   todayFeature.style.display = 'block';
 }
@@ -424,7 +416,6 @@ data.forEach(d => {
 // ─── Direct URL Redirect Action ──────────────────────────────────────────
 function openModal(idx) {
   const targetDayNum = idx + 1;
-  // Add July2026/ right in front of the file name
   window.location.href = `July2026/day${targetDayNum}.html`;
 }
 </script>
