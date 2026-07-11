@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Still Waters | July 2026 — The Believer's Duty to the Nation</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d1b2a;
+      --card-bg:   #132235;
+      --card-hov:  #1b3050;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8c97a;
+      --cream:     #e8dcc8;
+      --muted:     #8a9bb0;
+      --border:    rgba(201,168,76,0.18);
+      --radius:    12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 56px 24px 44px;
+    }
+    .edition-badge {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      padding: 5px 16px;
+      border-radius: 20px;
+      margin-bottom: 18px;
+    }
+    header h1 {
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--gold-lt);
+      letter-spacing: 4px;
+      font-weight: 400;
+      margin-bottom: 6px;
+    }
+    .header-sub {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .header-theme {
+      font-style: italic;
+      color: var(--cream);
+      font-size: 1.15rem;
+      opacity: 0.85;
+    }
+    .header-theme::before, .header-theme::after { content: '"'; color: var(--gold); }
+
+    /* ─── MAIN ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 48px clamp(16px, 5vw, 40px) 80px;
+      flex: 1;
+    }
+    .section-label {
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 32px;
+    }
+
+    /* ─── CALENDAR GRID ─── */
+    .calendar-header {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .cal-day-name {
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding: 4px;
+    }
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+    .cal-empty {
+      background: transparent;
+    }
+    .day-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 10px 12px;
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+      text-align: center;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 6px;
+    }
+    .day-card:hover {
+      background: var(--card-hov);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(201,168,76,0.12);
+      border-color: rgba(201,168,76,0.4);
+    }
+    .day-card:focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 2px;
+    }
+    .day-num {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .day-title {
+      font-size: 0.65rem;
+      color: var(--muted);
+      line-height: 1.3;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .day-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: 0.5;
+      margin-top: auto;
+    }
+
+    /* ─── DATE-AWARE STATES ─── */
+    .day-card.locked {
+      opacity: 0.3;
+      cursor: not-allowed;
+      filter: grayscale(60%);
+      pointer-events: none;
+    }
+    .day-card.today {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 1px var(--gold), 0 6px 24px rgba(201,168,76,0.28);
+      background: #1d2f45;
+    }
+    .day-card.today .day-num { color: var(--gold-lt); }
+    .today-badge {
+      display: inline-block;
+      background: var(--gold);
+      color: #0a1525;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+    .lock-icon { font-size: 0.8rem; opacity: 0.4; margin-top: auto; }
+
+    /* ─── TODAY FEATURE BANNER ─── */
+    .today-feature {
+      background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.03) 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 14px;
+      padding: 30px 36px;
+      margin-bottom: 44px;
+      text-align: center;
+    }
+    .today-feature-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .today-feature-title {
+      font-size: clamp(1.1rem, 3vw, 1.55rem);
+      color: var(--cream);
+      font-weight: 400;
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .today-feature-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+    .today-feature-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.3px;
+    }
+    .today-feature-btn:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .feature-notice {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 32px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .feature-notice strong { color: var(--gold-lt); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      text-align: center;
+      padding: 32px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #3a4e63;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 600px) {
+      header { padding: 36px 16px 28px; }
+      .calendar-grid { gap: 5px; }
+      .day-card { padding: 10px 6px; min-height: 72px; }
+      .day-num { font-size: 1.1rem; }
+      .day-title { font-size: 0.58rem; }
+      .today-feature { padding: 20px 16px; }
+      .today-feature-btn { width: 100%; padding: 12px 16px; }
+    }
+    @media (max-width: 380px) {
+      .calendar-header, .calendar-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+      .day-card { min-height: 58px; padding: 8px 3px; }
+      .day-num { font-size: 0.95rem; }
+      .day-title { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="edition-badge">July 2026 Edition</div>
+    <h1>Still Waters</h1>
+    <p class="header-sub">Daily Devotional</p>
+    <p class="header-theme">The Believer's Duty to the Nation</p>
+  </header>
+
+  <main>
+    <p class="section-label">Select a day to read</p>
+
+    <!-- Today Feature / Notice -->
+    <div id="todayFeature" class="today-feature" style="display:none;">
+      <div class="today-feature-label">📅 Today’s Devotional</div>
+      <h2 class="today-feature-title" id="todayFeatTitle"></h2>
+      <p class="today-feature-ref" id="todayFeatRef"></p>
+      <button class="today-feature-btn" id="todayFeatBtn">Read Today’s Devotional →</button>
+    </div>
+    <div id="featureNotice" class="feature-notice" style="display:none;"></div>
+
+    <!-- Day-name row -->
+    <div class="calendar-header">
+      <div class="cal-day-name">Sun</div>
+      <div class="cal-day-name">Mon</div>
+      <div class="cal-day-name">Tue</div>
+      <div class="cal-day-name">Wed</div>
+      <div class="cal-day-name">Thu</div>
+      <div class="cal-day-name">Fri</div>
+      <div class="cal-day-name">Sat</div>
+    </div>
+
+    <div class="calendar-grid" id="calGrid"></div>
+  </main>
+
+  <footer>&copy; 2026 Christ Discipleship Place, Lokoja</footer>
+
+<script>
+const data = [
+  { "day": 1, "title": "God Placed You in the Nation for a Purpose", "ref": "Acts 17:26-27" },
+  { "day": 2, "title": "You Are a Chosen People, a Holy Nation", "ref": "Deuteronomy 7:6" },
+  { "day": 3, "title": "You Are Strangers and Pilgrims on Earth", "ref": "Hebrews 11:13" },
+  { "day": 4, "title": "You Are in the World but Not of It", "ref": "John 17:16" },
+  { "day": 5, "title": "You Are Ambassadors for Christ", "ref": "2 Corinthians 5:20" },
+  { "day": 6, "title": "Pray for All People, Especially Leaders", "ref": "1 Timothy 2:1-2" },
+  { "day": 7, "title": "Seek the Peace of the Nation in Prayer", "ref": "Jeremiah 29:7" },
+  { "day": 8, "title": "Dominion Belongs to the Lord", "ref": "Psalm 22:28" },
+  { "day": 9, "title": "Daniel Stood in the Gap for His Nation", "ref": "Daniel 9:3" },
+  { "day": 10, "title": "The Effective Prayer of a Righteous Person", "ref": "James 5:16" },
+  { "day": 11, "title": "All Authority Comes from God", "ref": "John 19:11" },
+  { "day": 12, "title": "Submit for the Lord's Sake", "ref": "1 Peter 2:13-14" },
+  { "day": 13, "title": "Rebelling Against Authority is Rebelling Against God", "ref": "Romans 13:2" },
+  { "day": 14, "title": "Give to Caesar What Belongs to Caesar", "ref": "Matthew 22:21" },
+  { "day": 15, "title": "Give Honour to Whom Honour is Due", "ref": "Romans 13:7" },
+  { "day": 16, "title": "Live Peacefully with All Men", "ref": "1 Thessalonians 4:11" },
+  { "day": 17, "title": "Work for the Welfare of Your City", "ref": "Genesis 39:2-5" },
+  { "day": 18, "title": "Righteousness Exalts a Nation", "ref": "Proverbs 29:2" },
+  { "day": 19, "title": "Be Ready to Do Every Good Work", "ref": "Titus 3:1" },
+  { "day": 20, "title": "You Are the Salt of the Earth", "ref": "Matthew 5:13" },
+  { "day": 21, "title": "You Are the Light of the World", "ref": "Matthew 5:14" },
+  { "day": 22, "title": "Speak Up for Those Who Cannot Speak", "ref": "Isaiah 1:17 / Micah 6:8" },
+  { "day": 23, "title": "Expose the Works of Darkness", "ref": "Ephesians 5:11" },
+  { "day": 24, "title": "The Courage to Stand Alone", "ref": "Isaiah 51:7b (BSB)" },
+  { "day": 25, "title": "We Must Obey God Rather Than Men", "ref": "Acts 5:29" },
+  { "day": 26, "title": "Overcome Evil with Good", "ref": "1 Thessalonians 5:15" },
+  { "day": 27, "title": "My Kingdom Is Not of This World", "ref": "John 6:15" },
+  { "day": 28, "title": "When They Chose God Over the King", "ref": "Daniel 3:6" },
+  { "day": 29, "title": "We Look for a Heavenly Country", "ref": "Hebrews 13:14" },
+  { "day": 30, "title": "We Await the Saviour from Heaven", "ref": "Philippians 3:20" },
+  { "day": 31, "title": "The Kingdom That Will Never End", "ref": "Daniel 2:44" }
+];
+
+// ─── Date Detection (Africa/Lagos, UTC+1) ─────────────────────────────────────────
+const nowLagos   = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+const todayYear  = nowLagos.getFullYear();
+const todayMonth = nowLagos.getMonth(); 
+const todayDay   = nowLagos.getDate();
+
+const JULY = 6, YEAR = 2026;
+let unlockedUpTo = 0; 
+let archiveMode  = false;
+
+if (todayYear > YEAR || (todayYear === YEAR && todayMonth > JULY)) {
+  archiveMode  = true; 
+  unlockedUpTo = 31;
+} else if (todayYear === YEAR && todayMonth === JULY) {
+  unlockedUpTo = todayDay; 
+}
+
+// ─── Today Feature / Notice ──────────────────────────────────────────────
+const todayFeature  = document.getElementById('todayFeature');
+const featureNotice = document.getElementById('featureNotice');
+
+if (archiveMode) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '📖 <strong>July 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
+} else if (unlockedUpTo === 0) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '🕊️ <strong>Still Waters Daily Devotional</strong> begins <strong>1 July 2026</strong>.<br>Come back then — a new devotional will unlock every day.';
+} else {
+  const todayData = data[unlockedUpTo - 1];
+  document.getElementById('todayFeatTitle').textContent = todayData.title;
+  document.getElementById('todayFeatRef').textContent   = todayData.ref;
+  document.getElementById('todayFeatBtn').addEventListener('click', () => openModal(unlockedUpTo - 1));
+  todayFeature.style.display = 'block';
+}
+
+// ─── Build Calendar Grid ───────────────────────────────────────────────────
+const grid = document.getElementById('calGrid');
+const START_DOW = 3; // Wednesday
+
+for (let i = 0; i < START_DOW; i++) {
+  const empty = document.createElement('div');
+  empty.className = 'cal-empty';
+  grid.appendChild(empty);
+}
+
+data.forEach(d => {
+  const isToday  = !archiveMode && (d.day === unlockedUpTo);
+  const isLocked = d.day > unlockedUpTo;
+
+  const card = document.createElement('div');
+  card.className = 'day-card' + (isToday ? ' today' : '') + (isLocked ? ' locked' : '');
+
+  if (!isLocked) {
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `July ${d.day}: ${d.title}`);
+    card.addEventListener('click', () => openModal(d.day - 1));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(d.day - 1); }
+    });
+  } else {
+    card.setAttribute('aria-label', `July ${d.day}: not yet available`);
+    card.setAttribute('aria-disabled', 'true');
+  }
+
+  card.innerHTML = `
+    <div class="day-num">${d.day}</div>
+    <div class="day-title">${d.title}</div>
+    ${isToday  ? '<div class="today-badge">Today</div>' : ''}
+    ${isLocked ? '<div class="lock-icon">🔒</div>' : (!isToday ? '<div class="day-dot"></div>' : '')}
+  `;
+
+  grid.appendChild(card);
+});
+
+// ─── Direct URL Redirect Action ──────────────────────────────────────────
+function openModal(idx) {
+  const targetDayNum = idx + 1;
+  window.location.href = `day${targetDayNum}.html`;
+}
+</script>
+</body>
+</html>
