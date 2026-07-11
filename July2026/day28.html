@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Still Waters | July 28 — When They Chose God Over the King</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0d1b2a;
+      --card-bg:   #132235;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8c97a;
+      --cream:     #e8dcc8;
+      --muted:     #8a9bb0;
+      --green-bg:  #0d1f17;
+      --purple-bg: #160f2a;
+      --border:    rgba(201,168,76,0.18);
+    }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .back-home {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    .back-home:hover { color: var(--gold-lt); }
+    .day-badge {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    main {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px clamp(16px, 5vw, 36px) 60px;
+      flex: 1;
+    }
+    .opening-quote {
+      border-left: 3px solid var(--gold);
+      padding: 12px 18px;
+      margin-bottom: 28px;
+      font-style: italic;
+      line-height: 1.7;
+      font-size: 1.05rem;
+      background: rgba(201,168,76,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .body-content p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #cdd9e5;
+      margin-bottom: 20px;
+    }
+    .memory-box {
+      background: var(--purple-bg);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 32px;
+    }
+    .box-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #9b8ec4;
+      margin-bottom: 10px;
+    }
+    .prayer-box .box-label { color: #52a882; }
+    .box-text {
+      font-style: italic;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #d4c9f0;
+      margin-bottom: 8px;
+    }
+    .box-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #9b8ec4;
+    }
+    .prayer-box {
+      background: var(--green-bg);
+      border: 1px solid rgba(52,211,153,0.18);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 16px;
+    }
+    .prayer-box .box-text { color: #b8d4c4; }
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .nav-btn {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(201,168,76,0.2); }
+    .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #3a4e63;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+  </style>
+
+  <!-- DATE GATEKEEPER LOCK -->
+  <script>
+    (function() {
+      const pageDay = parseInt("28");
+      const targetYear = 2026, targetMonth = 6; // July (0-indexed)
+      const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+      
+      let isArchive = false;
+      let currentUnlockedDay = 0;
+
+      if (nowLagos.getFullYear() > targetYear || (nowLagos.getFullYear() === targetYear && nowLagos.getMonth() > targetMonth)) {
+        isArchive = true;
+      } else if (nowLagos.getFullYear() === targetYear && nowLagos.getMonth() === targetMonth) {
+        currentUnlockedDay = nowLagos.getDate();
+      }
+
+      if (!isArchive && pageDay > currentUnlockedDay) {
+        alert("🔒 This devotional will unlock on its calendar day!");
+        window.location.href = "index.html"; 
+      }
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-home">&#8592; Back to Calendar</a>
+    <div class="day-badge">July 28</div>
+    <h1>When They Chose God Over the King</h1>
+  </header>
+
+  <main>
+    <blockquote class="opening-quote">“...whoever does not fall down and worship shall be thrown into the middle of a furnace of blazing fire.” (Daniel 3:6)</blockquote>
+    <div class="body-content"><p>What do you do when the king’s command and God’s command cannot both be obeyed?</p><p>To follow a leader means trusting them to lead well. Scripture supports this, but only as far as the leading does not pull against God. The moment it does, allegiance must break. That is what Shadrach, Meshach, and Abednego stood before when they refused to bow (Daniel 3:16–18).</p><p>What about when a new decree forced worship of the king alone? Did Daniel even deliberate? No. As soon as he learned of it, he went to his room and prayed toward Jerusalem, just as he always had (Daniel 6:10). Someone else might have hidden his loyalty to bargain for safety. Not Daniel. He simply kept belonging to the Kingdom he had always belonged to.</p><p>In each case, the cost on the table was death. In each case, the reward was God’s favour, earned by refusing anything less than full allegiance.</p><p>Why? Because they knew where their ultimate citizenship lay. Earthly nationals, yes, but ambassadors first, of a Truer Kingdom and a Higher King.</p><p>We must carry the same mind. Our duty to our nation stands only as far as it does not contravene our citizenship in God’s Kingdom. This earthly one is for a little while. That Heavenly one is for eternity. And our visa into it was purchased by the blood of the King.</p><p>When the two nations’ interests collide, the choice is no real contest. We were always going to choose the eternal.</p></div>
+
+    <div class="memory-box">
+      <div class="box-label">📖 Memory Verse</div>
+      <p class="box-text">We ought to obey God rather than men.</p>
+      <div class="box-ref">(Acts 5:29)</div>
+    </div>
+
+    <div class="prayer-box">
+      <div class="box-label">🙏 Prayer</div>
+      <p class="box-text">Dear God, when the nation and Heaven pull in different directions, let there be no contest in my heart. I belong to Your Kingdom first. Let my life prove it, whatever it costs. Amen.</p>
+    </div>
+
+    <div class="page-nav">
+      <a href="day27.html" class="nav-btn ">&#8592; Previous Day</a>
+      <a href="day29.html" class="nav-btn ">Next Day &#8594;</a>
+    </div>
+  </main>
+
+  <footer>&copy; 2026 Christ Discipleship Place, Lokoja</footer>
+
+</body>
+</html>
