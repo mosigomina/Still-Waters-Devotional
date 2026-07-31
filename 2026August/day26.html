@@ -138,8 +138,8 @@
       padding: 12px 30px;
       border-radius: 25px;
       font-weight: bold;
-      font-family: 'Segoe UI', sans-serif;
-      font-size: 0.9rem;
+      font-family: 'Georgia', 'Segoe UI', serif;
+      font-size: 0.95rem;
       cursor: pointer;
       transition: transform 0.15s, background 0.15s;
     }
@@ -205,7 +205,7 @@
     </div>
 
     <div class="share-container">
-      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+      <button class="share-btn" id="shareBtn">📤 Share Today&rsquo;s Devotional</button>
     </div>
 
     <div class="nav-buttons">
@@ -218,7 +218,7 @@
   document.getElementById('shareBtn').addEventListener('click', async () => {
     const shareData = {
       title: 'Still Waters Devotional',
-      text: 'Read today\'s devotional: The Second Chance',
+      text: 'Read today’s devotional: The Second Chance',
       url: window.location.href
     };
     if (navigator.share) {
