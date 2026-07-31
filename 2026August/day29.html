@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>August 29, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:   #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">AUGUST 29</div>
+    <h1>Can These Bones Live?</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      “So I prophesied as He commanded me, and breath came into them, and they lived, and stood upon their feet, an exceedingly great army.” (Ezekiel 37:10)
+    </div>
+
+    <div class="content">
+      <p>In biological terms, clinical death is absolute and irreversible. Once the heart stops pumping oxygen, things start happening. Cellular respiration ceases, tissue necrosis begins, chemical pathways crumble permanently. With science, once cellular decay sets in, there is neither basis nor reason for biological restoration.</p><p>Then God says, hold my cup.</p><p>Do you remember Ezekiel 37:1–6, when God asked Ezekiel if the dry and scattered bones in that valley could live? The Bible narrates that after God commanded Ezekiel to speak His word, dried marrow, sinew, flesh, and breath marched at that command and assembled into a living army. Mind-boggling, to say the least.</p><p>It tells us that because God is the Creator who established biological laws in the first place, His spoken word carries the raw creative power to command dead cells back into existence, and even collapsed chemical pathways to arrange themselves in Jesus’s name.</p><p>If God can effortlessly overrule the most binding law of biology and reverse even rotting flesh and ground-to-powder bones just by speaking, what scenario in your life is beyond His reach? Absolutely nothing. Why not commit to God everything?</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        “Jesus said to her, ‘I am the resurrection and the life. He who believes in Me, though he may die, he shall live.’” <br><span style="font-style: normal; display: block; margin-top: 6px;">(John 11:25)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Lord, speak over what is dry and scattered in my life. You established the laws that govern all things, and Your word overrules every one of them. Speak, and let these bones live. Amen.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day28.html" class="nav-btn">← Previous Day</a>
+      <a href="day30.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today\'s devotional: Can These Bones Live?',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

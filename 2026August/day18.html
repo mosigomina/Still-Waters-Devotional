@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>August 18, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:   #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">AUGUST 18</div>
+    <h1>The Enemy’s Defeat</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      “I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy; nothing will harm you.” (Luke 10:19)
+    </div>
+
+    <div class="content">
+      <p>The destruction of Pharaoh’s army at the Red Sea was more than Israel’s deliverance. More than anything, it was the public humiliation of a defeated enemy. The same waters that became a pathway for God’s people became the instrument of judgment for those who pursued them. In an even greater way, the cross of Christ exposed the limits of Satan’s power. Through His death and resurrection, Jesus stripped the powers of darkness of their ultimate weapon and proved that God’s redemptive purpose could never be overthrown.</p><p>When the seventy disciples returned rejoicing that even demons submitted to them, Jesus reminded them that He had already seen Satan fall like lightning from heaven. Their authority over evil spirits was evidence that the kingdom of God had already begun to dismantle the enemy’s dominion. The cross completed that decisive victory, revealing that Satan’s power was always subject to the authority of Christ. Every triumph over darkness points back to Calvary, where the enemy’s strength was exposed before the wisdom and power of God.</p><p>The enemy has not ceased to oppose God’s people, but he fights as a defeated foe. Our confidence therefore rests in the finished work of Jesus, who has already unveiled the enemy’s defeat and secured our place in His triumph.</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        “I have given you authority to trample on snakes and scorpions and to overcome all the power of the enemy; nothing will harm you.” <br><span style="font-style: normal; display: block; margin-top: 6px;">(Luke 10:19)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Lord, I receive the wisdom and understanding to deal with the enemy as a defeated foe. In Jesus’ name. Amen.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day17.html" class="nav-btn">← Previous Day</a>
+      <a href="day19.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today\'s devotional: The Enemy’s Defeat',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

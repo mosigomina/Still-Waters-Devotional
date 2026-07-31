@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>August 25, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:   #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">AUGUST 25</div>
+    <h1>Rebuilding the Ruins</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      “Come, let us rebuild the wall of Jerusalem, that we may no longer be a reproach.” (Nehemiah 2:17)
+    </div>
+
+    <div class="content">
+      <p>The saying “actions have consequences” is true. The apostle Paul wrote that whatever a man sows, he shall reap. Most times the ruins in our lives are the result of our disobedience, neglect, and wrong choices. My intention by the end of this reading is for you to see the sovereignty of God in both reversible and irreversible consequences.</p><p>The Lord told Israel while they were in the wilderness that if they failed to obey Him and follow all His commands in the land they were about to possess, the land itself would vomit them out (Deuteronomy 28:63–64). This is quite like a stone that has been set rolling, stopping only when we stop it. Put differently, we can reverse the consequences by choosing to repent and obey God.</p><p>But there are also those consequences that are hard to reverse, requiring God’s intervention for anything to be done about it. For example, God’s judgment on Moses for striking the rock when he had been instructed to speak to it (Numbers 20:12). Moses prayed and begged but God told him not to speak to Him about it again (Deuteronomy 3:26).</p><p>Or the case of David arranging for the death of Uriah to preserve his name. Here again, God passed judgment that the sword would not leave David’s household (2 Samuel 12:9–10). Did God forgive the man? Yes. But was the judgment reversed? No.</p><p>The point here is that whether in reversible and irreversible, God is the constant. It is He that passes judgment. He is the same One that overrides the judgment if He so chooses.</p><p>Knowing this, we constantly appeal to Him and to His mercy. But thank God that God is merciful and loving, slow to anger and full of constant love (Psalm 103:8). And even with seemingly irreversible consequences to our choices, decisions, and actions, God is able to reverse and restore.</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        “Behold, I am making all things new.” <br><span style="font-style: normal; display: block; margin-top: 6px;">(Revelation 21:5)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Oh sovereign God, maker of all things, we are Your people and the sheep of Your pasture. Lead us in the way of truth and guide us in the path of righteousness. Amen.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day24.html" class="nav-btn">← Previous Day</a>
+      <a href="day26.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today\'s devotional: Rebuilding the Ruins',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

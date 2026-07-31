@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title id="pageTitle">Still Waters Daily Devotional</title>
+  <title>Still Waters | August 2026 — The Greatness of God</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -227,6 +227,18 @@
       letter-spacing: 0.3px;
     }
     .today-feature-btn:hover { background: var(--gold-lt); transform: translateY(-2px); }
+    .feature-notice {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      color: var(--muted);
+      text-align: center;
+      padding: 24px 32px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 40px;
+      line-height: 1.7;
+    }
+    .feature-notice strong { color: var(--gold-lt); }
 
     /* ─── FOOTER ─── */
     footer {
@@ -238,6 +250,7 @@
       border-top: 1px solid rgba(255,255,255,0.05);
     }
 
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 600px) {
       header { padding: 36px 16px 28px; }
       .calendar-grid { gap: 5px; }
@@ -247,32 +260,41 @@
       .today-feature { padding: 20px 16px; }
       .today-feature-btn { width: 100%; padding: 12px 16px; }
     }
+    @media (max-width: 380px) {
+      .calendar-header, .calendar-grid { grid-template-columns: repeat(7, 1fr); gap: 3px; }
+      .day-card { min-height: 58px; padding: 8px 3px; }
+      .day-num { font-size: 0.95rem; }
+      .day-title { display: none; }
+    }
   </style>
 </head>
 <body>
 
   <header>
     <div class="header-nav">
-      <div class="edition-badge" id="editionBadge">Loading Edition...</div>
+      <div class="edition-badge">August 2026 Edition</div>
       <select class="archive-select" onchange="if(this.value) location.href = this.value;">
         <option value="">📁 Archive Menu</option>
-        <option value="2026August/index.html">August 2026</option>
-        <option value="2026July/index.html">July 2026</option>
+        <option value="../index.html">August 2026 (Active)</option>
+        <option value="../2026July/index.html">July 2026</option>
       </select>
     </div>
     <h1>Still Waters</h1>
-    <p class="header-theme" id="headerTheme"></p>
+    <p class="header-theme">The Greatness of God</p>
   </header>
 
   <main>
     <p class="section-label">Select a day to read</p>
 
+    <!-- Today Feature / Notice -->
     <div id="todayFeature" class="today-feature" style="display:none;">
       <div class="today-feature-label">📅 Today’s Devotional</div>
       <h2 class="today-feature-title" id="todayFeatTitle"></h2>
       <button class="today-feature-btn" id="todayFeatBtn">Read Today’s Devotional →</button>
     </div>
+    <div id="featureNotice" class="feature-notice" style="display:none;"></div>
 
+    <!-- Day-name row -->
     <div class="calendar-header">
       <div class="cal-day-name">Sun</div>
       <div class="cal-day-name">Mon</div>
@@ -289,118 +311,86 @@
   <footer>&copy; 2026 Christ Discipleship Place, Lokoja</footer>
 
 <script>
-// ─── DATA CONFIGURATIONS ───
-const julyData = [
-  { "day": 1, "title": "God Placed You in the Nation for a Purpose" },
-  { "day": 2, "title": "You Are a Chosen People, a Holy Nation" },
-  { "day": 3, "title": "You Are Strangers and Pilgrims on Earth" },
-  { "day": 4, "title": "You Are in the World but Not of It" },
-  { "day": 5, "title": "You Are Ambassadors for Christ" },
-  { "day": 6, "title": "Pray for All People, Especially Leaders" },
-  { "day": 7, "title": "Seek the Peace of the Nation in Prayer" },
-  { "day": 8, "title": "Dominion Belongs to the Lord" },
-  { "day": 9, "title": "Daniel Stood in the Gap for His Nation" },
-  { "day": 10, "title": "The Effective Prayer of a Righteous Person" },
-  { "day": 11, "title": "All Authority Comes from God" },
-  { "day": 12, "title": "Submit for the Lord’s Sake" },
-  { "day": 13, "title": "Rebelling Against Authority is Rebelling Against God" },
-  { "day": 14, "title": "Give to Caesar What Belongs to Caesar" },
-  { "day": 15, "title": "Give Honour to Whom Honour is Due" },
-  { "day": 16, "title": "Live Peacefully with All Men" },
-  { "day": 17, "title": "Work for the Welfare of Your City" },
-  { "day": 18, "title": "Righteousness Exalts a Nation" },
-  { "day": 19, "title": "Be Ready to Do Every Good Work" },
-  { "day": 20, "title": "You Are the Salt of the Earth" },
-  { "day": 21, "title": "You Are the Light of the World" },
-  { "day": 22, "title": "Speak Up for Those Who Cannot Speak" },
-  { "day": 23, "title": "Expose the Works of Darkness" },
-  { "day": 24, "title": "The Courage to Stand Alone" },
-  { "day": 25, "title": "We Must Obey God Rather Than Men" },
-  { "day": 26, "title": "Overcome Evil with Good" },
-  { "day": 27, "title": "My Kingdom Is Not of This World" },
-  { "day": 28, "title": "When They Chose God Over the King" },
-  { "day": 29, "title": "We Look for a Heavenly Country" },
-  { "day": 30, "title": "We Await the Saviour from Heaven" },
-  { "day": 31, "title": "The Kingdom That Will Never End" }
+const data = [
+  { "day": 1, "title": "The Problem of Empty Hands", "ref": "Exodus 16:3" },
+  { "day": 2, "title": "Enough for Today", "ref": "Exodus 16:4" },
+  { "day": 3, "title": "The Outsiders Get Bread Too", "ref": "Psalm 145:16" },
+  { "day": 4, "title": "Grumbling and Gratitude", "ref": "Job 2:10" },
+  { "day": 5, "title": "The Desperate Outsider", "ref": "John 10:16" },
+  { "day": 6, "title": "The Test of Trust", "ref": "Deuteronomy 8:2–3" },
+  { "day": 7, "title": "Rest in His Provision", "ref": "Matthew 11:28–30" },
+  { "day": 8, "title": "God’s Unusual Providers", "ref": "John 6:8–9" },
+  { "day": 9, "title": "When Pride Almost Costs Everything", "ref": "2 Kings 5:14" },
+  { "day": 10, "title": "Healing at a Distance", "ref": "Matthew 8:10" },
+  { "day": 11, "title": "The Long-Term Sufferer", "ref": "Mark 5:34" },
+  { "day": 12, "title": "Healing and Forgiveness Together", "ref": "Psalm 103:3" },
+  { "day": 13, "title": "The Blind Who Cried Out", "ref": "Mark 10:52" },
+  { "day": 14, "title": "The Deaf Who Could Not Hear", "ref": "Hebrews 2:1" },
+  { "day": 15, "title": "Breaking Identity Chains", "ref": "Romans 8:16" },
+  { "day": 16, "title": "The Blood That Breaks Power", "ref": "Luke 22:20" },
+  { "day": 17, "title": "The God Who Fights for You", "ref": "Mark 4:39" },
+  { "day": 18, "title": "The Enemy’s Defeat", "ref": "Luke 10:19" },
+  { "day": 19, "title": "Out of the Wilderness", "ref": "Matthew 4:1–2" },
+  { "day": 20, "title": "The Danger of an Empty House", "ref": "Matthew 12:43–44" },
+  { "day": 21, "title": "Set Free to Serve", "ref": "Exodus 7:16" },
+  { "day": 22, "title": "The Broken Covenant", "ref": "Luke 22:61–62" },
+  { "day": 23, "title": "The Grief of Wandering", "ref": "Lamentations 3:22–23" },
+  { "day": 24, "title": "A Future and a Hope", "ref": "Jeremiah 29:11" },
+  { "day": 25, "title": "Rebuilding the Ruins", "ref": "Nehemiah 2:17" },
+  { "day": 26, "title": "The Second Chance", "ref": "John 21:17" },
+  { "day": 27, "title": "Restoration with Scars", "ref": "Haggai 2:9" },
+  { "day": 28, "title": "The Banquet Restored", "ref": "Revelation 19:9" },
+  { "day": 29, "title": "Can These Bones Live?", "ref": "Ezekiel 37:10" },
+  { "day": 30, "title": "The Foretaste", "ref": "Matthew 12:40" },
+  { "day": 31, "title": "The Firstborn from the Dead", "ref": "1 Corinthians 15:20" }
 ];
 
-const augustData = [
-  { "day": 1, "title": "The Problem of Empty Hands" },
-  { "day": 2, "title": "Enough for Today" },
-  { "day": 3, "title": "The Outsiders Get Bread Too" },
-  { "day": 4, "title": "Grumbling and Gratitude" },
-  { "day": 5, "title": "The Desperate Outsider" },
-  { "day": 6, "title": "The Test of Trust" },
-  { "day": 7, "title": "Rest in His Provision" },
-  { "day": 8, "title": "God’s Unusual Providers" },
-  { "day": 9, "title": "When Pride Almost Costs Everything" },
-  { "day": 10, "title": "Healing at a Distance" },
-  { "day": 11, "title": "The Long-Term Sufferer" },
-  { "day": 12, "title": "Healing and Forgiveness Together" },
-  { "day": 13, "title": "The Blind Who Cried Out" },
-  { "day": 14, "title": "The Deaf Who Could Not Hear" },
-  { "day": 15, "title": "Breaking Identity Chains" },
-  { "day": 16, "title": "The Blood That Breaks Power" },
-  { "day": 17, "title": "The God Who Fights for You" },
-  { "day": 18, "title": "The Enemy’s Defeat" },
-  { "day": 19, "title": "Out of the Wilderness" },
-  { "day": 20, "title": "The Danger of an Empty House" },
-  { "day": 21, "title": "Set Free to Serve" },
-  { "day": 22, "title": "The Broken Covenant" },
-  { "day": 23, "title": "The Grief of Wandering" },
-  { "day": 24, "title": "A Future and a Hope" },
-  { "day": 25, "title": "Rebuilding the Ruins" },
-  { "day": 26, "title": "The Second Chance" },
-  { "day": 27, "title": "Restoration with Scars" },
-  { "day": 28, "title": "The Banquet Restored" },
-  { "day": 29, "title": "Can These Bones Live?" },
-  { "day": 30, "title": "The Foretaste" },
-  { "day": 31, "title": "The Firstborn from the Dead" }
-];
+// ─── Date Detection (Africa/Lagos, UTC+1) ─────────────────────────────────────────
+const nowLagos   = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+const todayYear  = nowLagos.getFullYear();
+const todayMonth = nowLagos.getMonth(); 
+const todayDay   = nowLagos.getDate();
 
-// ─── DATE DETECTION (Africa/Lagos, UTC+1) ───
-const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
-const year  = nowLagos.getFullYear();
-const month = nowLagos.getMonth(); // 6 = July, 7 = August
-const day   = nowLagos.getDate();
+const AUGUST = 7, YEAR = 2026; // Month 7 = August (0-indexed)
+let unlockedUpTo = 0; 
+let archiveMode  = false;
 
-let isAugustActive = (year > 2026 || (year === 2026 && month >= 7));
-
-// Select active data & config based on current date
-const activeMonthData = isAugustActive ? augustData : julyData;
-const folderName      = isAugustActive ? '2026August' : '2026July';
-const startDow        = isAugustActive ? 6 : 3; // Aug starts Sat (6), Jul starts Wed (3)
-const themeText       = isAugustActive ? 'The Greatness of God' : 'The Believer’s Duty to the Nation';
-const badgeText       = isAugustActive ? 'August 2026 Edition' : 'July 2026 Edition';
-
-// Set UI elements
-document.getElementById('pageTitle').textContent = `Still Waters | ${badgeText} — ${themeText}`;
-document.getElementById('editionBadge').textContent = badgeText;
-document.getElementById('headerTheme').textContent = themeText;
-
-const unlockedUpTo = isAugustActive ? (month === 7 ? day : 31) : day;
-
-// Featured Banner
-if (unlockedUpTo > 0) {
-  const todayData = activeMonthData[Math.min(unlockedUpTo, activeMonthData.length) - 1];
-  document.getElementById('todayFeatTitle').textContent = todayData.title;
-  document.getElementById('todayFeatBtn').addEventListener('click', () => {
-    window.location.href = `${folderName}/day${unlockedUpTo}.html`;
-  });
-  document.getElementById('todayFeature').style.display = 'block';
+if (todayYear > YEAR || (todayYear === YEAR && todayMonth > AUGUST)) {
+  archiveMode  = true; 
+  unlockedUpTo = 31;
+} else if (todayYear === YEAR && todayMonth === AUGUST) {
+  unlockedUpTo = todayDay; 
 }
 
-// ─── BUILD CALENDAR GRID ───
-const grid = document.getElementById('calGrid');
+// ─── Today Feature / Notice ──────────────────────────────────────────────
+const todayFeature  = document.getElementById('todayFeature');
+const featureNotice = document.getElementById('featureNotice');
 
-for (let i = 0; i < startDow; i++) {
+if (archiveMode) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '📖 <strong>August 2026 Archive</strong><br>All 31 devotionals are available to read. Select any day below.';
+} else if (unlockedUpTo === 0) {
+  featureNotice.style.display = 'block';
+  featureNotice.innerHTML = '🕊️ <strong>Still Waters Daily Devotional</strong> August edition begins <strong>1 August 2026</strong>.<br>A new devotional unlocks every day.';
+} else {
+  const todayData = data[unlockedUpTo - 1];
+  document.getElementById('todayFeatTitle').textContent = todayData.title;
+  document.getElementById('todayFeatBtn').addEventListener('click', () => openDay(unlockedUpTo));
+  todayFeature.style.display = 'block';
+}
+
+// ─── Build Calendar Grid ───────────────────────────────────────────────────
+const grid = document.getElementById('calGrid');
+const START_DOW = 6; // Saturday (August 1, 2026 starts on Saturday)
+
+for (let i = 0; i < START_DOW; i++) {
   const empty = document.createElement('div');
   empty.className = 'cal-empty';
   grid.appendChild(empty);
 }
 
-activeMonthData.forEach(d => {
-  const isToday  = d.day === unlockedUpTo;
+data.forEach(d => {
+  const isToday  = !archiveMode && (d.day === unlockedUpTo);
   const isLocked = d.day > unlockedUpTo;
 
   const card = document.createElement('div');
@@ -409,9 +399,14 @@ activeMonthData.forEach(d => {
   if (!isLocked) {
     card.setAttribute('tabindex', '0');
     card.setAttribute('role', 'button');
-    card.addEventListener('click', () => {
-      window.location.href = `${folderName}/day${d.day}.html`;
+    card.setAttribute('aria-label', `August ${d.day}: ${d.title}`);
+    card.addEventListener('click', () => openDay(d.day));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDay(d.day); }
     });
+  } else {
+    card.setAttribute('aria-label', `August ${d.day}: not yet available`);
+    card.setAttribute('aria-disabled', 'true');
   }
 
   card.innerHTML = `
@@ -423,6 +418,11 @@ activeMonthData.forEach(d => {
 
   grid.appendChild(card);
 });
+
+// ─── Direct Relative Navigation (Inside 2026August Folder) ───────────────
+function openDay(dayNum) {
+  window.location.href = `day${dayNum}.html`;
+}
 </script>
 </body>
 </html>

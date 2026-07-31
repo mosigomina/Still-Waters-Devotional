@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>August 8, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:   #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">AUGUST 8</div>
+    <h1>God’s Unusual Providers</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      One of His disciples, Andrew, Simon Peter’s brother, said to Him, ‘There is a lad here who has five barley loaves and two small fish, but what are they among so many?’ (John 6:8–9)
+    </div>
+
+    <div class="content">
+      <p>One thing we often do as believers is decide how God should answer our prayers. We expect Him to provide through a certain person, a particular job, a family member, or a specific opportunity. When those expectations are not met, we begin to worry or doubt. The truth is that God has never been limited to the methods we understand. He is the Creator of heaven and earth, and He can use anyone or anything to accomplish His purpose.</p><p>In 1 Kings 17:1–6, Elijah had just declared that there would be no rain in Israel. A drought meant there would be little food and water, yet God did not leave His servant without help. God instructed Elijah to go to the Brook Cherith, where he would drink from the brook. More surprisingly, God said He had commanded ravens to feed him.</p><p>Ravens are birds known for taking. Yet the God who created them commanded them to bring bread and meat to Elijah every morning and evening. Day after day, God kept His promise. Elijah’s survival depended entirely on God’s faithfulness.</p><p>This teaches us an important lesson: our source is God, and the channel He chooses to use is secondary.</p><p>In John 6:8–9, Andrew found a little boy with five loaves and two fish. Even Andrew admitted that it was too little for such a great need. But when the little boy gave what he had to Jesus, it became enough for everyone, with baskets left over.</p><p>These two scriptures remind us that God’s ways are higher than our ways. He can use ravens, a little boy, a widow, a stranger, or someone we never expect. He can open doors where there seem to be none.</p><p>If God owns everything, He is free to use any part of His creation to care for us.</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        The ravens brought him bread and meat in the morning, and bread and meat in the evening; and he drank from the brook. <br><span style="font-style: normal; display: block; margin-top: 6px;">(1 Kings 17:6)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Father, teach me to believe that You can use anyone or anything to meet my needs according to Your perfect will. In Jesus’ name, Amen.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day7.html" class="nav-btn">← Previous Day</a>
+      <a href="day9.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today\'s devotional: God’s Unusual Providers',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

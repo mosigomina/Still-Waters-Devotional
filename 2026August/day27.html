@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>August 27, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:   #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">AUGUST 27</div>
+    <h1>Restoration with Scars</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      “The glory of this latter temple shall be greater than the former, says the Lord of hosts. And in this place I will give peace.” (Haggai 2:9)
+    </div>
+
+    <div class="content">
+      <p>Among the many things we associate with glory, shame is rarely one of them. By our own estimation, beauty leaves the room with every scar that comes in, even though our natural forefathers made tribal marks a thing of beauty. Generally, the reverse is often true. And this is why it is such an awesome thing that even where there are flaws, God can pull out glory and overlay them with it.</p><p>We see this very clearly in Haggai 2. Having seen how their labour amounted to very little (verse 3), they were saddened. And this is how it can be with a believer in Christ. All our efforts spent praying, asking God to let light radiate from us because of the shame from our disobedience, can look small. As if nothing is happening.</p><p>God’s greatness shines through in the way He restores. In Haggai, He told them that although the temple they had built was small, made with wood, seemingly easily smashed apart, He would fill it with glory.</p><p>And that is what the Lord is saying today: although our present lives might still bear cracks from our old life before we came to Christ, God is able to seal up these cracks and fill in the gaps with His glory.</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        “And Thomas answered and said to Him, ‘My Lord and my God!’” <br><span style="font-style: normal; display: block; margin-top: 6px;">(John 20:28)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Lord, where my life still bears cracks and scars, fill them with Your glory. Let what remains of my old life become the very place where Your greatness is most clearly seen. Amen.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today's Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day26.html" class="nav-btn">← Previous Day</a>
+      <a href="day28.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today\'s devotional: Restoration with Scars',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

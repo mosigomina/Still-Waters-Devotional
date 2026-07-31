@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Still Waters | July 23 — Expose the Works of Darkness</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:        #0d1b2a;
+      --card-bg:   #132235;
+      --gold:      #c9a84c;
+      --gold-lt:   #e8c97a;
+      --cream:     #e8dcc8;
+      --muted:     #8a9bb0;
+      --green-bg:  #0d1f17;
+      --purple-bg: #160f2a;
+      --border:    rgba(201,168,76,0.18);
+    }
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 24px;
+    }
+    .back-home {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 15px;
+      letter-spacing: 1px;
+    }
+    .back-home:hover { color: var(--gold-lt); }
+    .day-badge {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      line-height: 1.3;
+      margin-bottom: 8px;
+    }
+    main {
+      max-width: 720px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px clamp(16px, 5vw, 36px) 60px;
+      flex: 1;
+    }
+    .opening-quote {
+      border-left: 3px solid var(--gold);
+      padding: 12px 18px;
+      margin-bottom: 28px;
+      font-style: italic;
+      line-height: 1.7;
+      font-size: 1.05rem;
+      background: rgba(201,168,76,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .body-content p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: #cdd9e5;
+      margin-bottom: 20px;
+    }
+    .memory-box {
+      background: var(--purple-bg);
+      border: 1px solid rgba(139,92,246,0.2);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 32px;
+    }
+    .box-label {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.68rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #9b8ec4;
+      margin-bottom: 10px;
+    }
+    .prayer-box .box-label { color: #52a882; }
+    .box-text {
+      font-style: italic;
+      font-size: 0.98rem;
+      line-height: 1.7;
+      color: #d4c9f0;
+      margin-bottom: 8px;
+    }
+    .box-ref {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #9b8ec4;
+    }
+    .prayer-box {
+      background: var(--green-bg);
+      border: 1px solid rgba(52,211,153,0.18);
+      border-radius: 10px;
+      padding: 20px 22px;
+      margin-top: 16px;
+    }
+    .prayer-box .box-text { color: #b8d4c4; }
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 40px;
+    }
+    .nav-btn {
+      background: rgba(201,168,76,0.1);
+      border: 1px solid var(--border);
+      color: var(--gold);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      transition: background 0.2s;
+    }
+    .nav-btn:hover { background: rgba(201,168,76,0.2); }
+    .nav-btn.disabled { opacity: 0.3; pointer-events: none; }
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.78rem;
+      color: #3a4e63;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ─── ELEGANT TOAST NOTIFICATION ─── */
+    .custom-toast {
+      position: fixed;
+      top: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #160f2a;
+      color: #e8c97a;
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      padding: 16px 24px;
+      border-radius: 12px;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .custom-toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+  </style>
+
+  <!-- DATE GATEKEEPER SYSTEM -->
+  <script>
+    (function() {
+      const pageDay = parseInt("23");
+      const targetYear = 2026, targetMonth = 6; // July (0-indexed)
+      const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+      
+      let isArchive = false;
+      let currentUnlockedDay = 0;
+
+      if (nowLagos.getFullYear() > targetYear || (nowLagos.getFullYear() === targetYear && nowLagos.getMonth() > targetMonth)) {
+        isArchive = true;
+      } else if (nowLagos.getFullYear() === targetYear && nowLagos.getMonth() === targetMonth) {
+        currentUnlockedDay = nowLagos.getDate();
+      }
+
+      // 1. URL GUARD: Kick back immediately if a user manually forces access to a locked day's URL
+      if (!isArchive && pageDay > currentUnlockedDay) {
+        window.location.href = "../index.html";
+        return;
+      }
+
+      // 2. BUTTON INTERCEPTOR: Handle clicking "Next Day" seamlessly
+      document.addEventListener("DOMContentLoaded", function() {
+        const nextDayNum = pageDay + 1;
+        const isNextDayLocked = !isArchive && (nextDayNum > currentUnlockedDay);
+
+        if (isNextDayLocked) {
+          const nextBtn = document.querySelector(".page-nav a:last-child");
+          if (nextBtn) {
+            nextBtn.addEventListener("click", function(e) {
+              e.preventDefault(); // Stop page navigation entirely
+              
+              // Trigger smooth overlay toast right here on the current page
+              const toast = document.getElementById("lockToast");
+              if (toast) {
+                toast.classList.add("show");
+                setTimeout(function() {
+                  toast.classList.remove("show");
+                }, 2500);
+              }
+            });
+          }
+        }
+      });
+    })();
+  </script>
+</head>
+<body>
+
+  <header>
+    <a href="../index.html" class="back-home">&#8592; Back to Calendar</a>
+    <div class="day-badge">July 23</div>
+    <h1>Expose the Works of Darkness</h1>
+  </header>
+
+  <main>
+    <blockquote class="opening-quote">Have no fellowship with the unfruitful works of darkness, but rather expose them. (Ephesians 5:11)</blockquote>
+    <div class="body-content"><p>It is very tempting to read the first part of our Bible reference and run with only it. We would then preach it to other believers in Christ: have no fellowship with darkness, avoid it, stay clean, keep your own hands unstained.</p><p>This is a manageable position, to be honest. It is a safe and cushy position. Except, the second half of the statement asks us for something that is neither safe nor cushy. Expose the works of darkness, it says.</p><p>The Greek word behind ‘expose’ means to bring something hidden into the light; to convict; to name a wrong so clearly that it can no longer hide behind ambiguity. One commentator explained that it was a duty to have nothing to do with the deeds of darkness, yes, but also an obligation to reprimand them.</p><p>If we only avoid the darkness, it would be undisturbed, free to keep operating wherever no one is willing to name it. But because the night is far gone and the day is at hand, we are to cast off the works of darkness and put on the armour of light (Romans 13:12).</p><p>Keep in mind what Isaiah 5:20 says: that there are people who call evil good and good evil, who confuse light and darkness. Even these must be confronted and exposed to the light. As believers in Christ, we are neither here to make people comfortable nor cushion darkness, whatever form it takes. Let us make it our aim to expose darkness, so that the light that Christ brings can do its work (John 3:20-21).</p></div>
+
+    <div class="memory-box">
+      <div class="box-label">📖 Memory Verse</div>
+      <p class="box-text">Have no fellowship with the unfruitful works of darkness, but rather expose them.</p>
+      <div class="box-ref">(Ephesians 5:11)</div>
+    </div>
+
+    <div class="prayer-box">
+      <div class="box-label">🙏 Prayer</div>
+      <p class="box-text">Dear God, give me the courage to do more than avoid darkness. Let me name it clearly when You call me to, even when silence would be easier. Amen.</p>
+    </div>
+
+    <div class="page-nav">
+      <a href="day22.html" class="nav-btn ">&#8592; Previous Day</a>
+      <a href="day24.html" class="nav-btn ">Next Day &#8594;</a>
+    </div>
+  </main>
+
+  <!-- Elegant overlay feedback element -->
+  <div id="lockToast" class="custom-toast">🔒 This devotional will unlock on its calendar day!</div>
+
+  <footer>&copy; 2026 Christ Discipleship Place, Lokoja</footer>
+
+</body>
+</html>
