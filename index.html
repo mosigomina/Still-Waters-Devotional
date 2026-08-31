@@ -256,6 +256,7 @@
       <div class="edition-badge" id="editionBadge">Loading Edition...</div>
       <select class="archive-select" onchange="if(this.value) location.href = this.value;">
         <option value="">📁 Archive Menu</option>
+        <option value="2026September/index.html">September 2026</option>
         <option value="2026August/index.html">August 2026</option>
         <option value="2026July/index.html">July 2026</option>
       </select>
@@ -358,27 +359,76 @@ const augustData = [
   { "day": 31, "title": "The Firstborn from the Dead" }
 ];
 
+const septemberData = [
+  { "day": 1, "title": "Spiritual Inconsistency" },
+  { "day": 2, "title": "Why So Fickle?" },
+  { "day": 3, "title": "Self-Denial and Personal Pleasure" },
+  { "day": 4, "title": "Facing Persecution" },
+  { "day": 5, "title": "Self-Love vs God-Love" },
+  { "day": 6, "title": "Desire’s Assurance" },
+  { "day": 7, "title": "Pleasure in Loving God" },
+  { "day": 8, "title": "The Sufficiency of God" },
+  { "day": 9, "title": "I Love Him, I Love Him Not?" },
+  { "day": 10, "title": "Complications with Consistency" },
+  { "day": 11, "title": "Ambitions and Dreams" },
+  { "day": 12, "title": "Finding Doubles for God" },
+  { "day": 13, "title": "Enjoying Earthly Things" },
+  { "day": 14, "title": "Worldly Pleasures" },
+  { "day": 15, "title": "Desire in Distraction" },
+  { "day": 16, "title": "Knowing God, Loving God" },
+  { "day": 17, "title": "One Focus" },
+  { "day": 18, "title": "God-Centred Living" },
+  { "day": 19, "title": "Spiritual Hunger as Feeling vs. Cultivation" },
+  { "day": 20, "title": "Spiritual Discipline" },
+  { "day": 21, "title": "Where Is Your Hunger?" },
+  { "day": 22, "title": "Religious Routine" },
+  { "day": 23, "title": "Don’t Want! Don’t Care!" },
+  { "day": 24, "title": "Community and Desire" },
+  { "day": 25, "title": "Draining Relationships" },
+  { "day": 26, "title": "Qualities of Spiritual Companions" },
+  { "day": 27, "title": "Growing Desire" },
+  { "day": 28, "title": "What About Obedience and Holiness?" },
+  { "day": 29, "title": "Relationships, Purpose, and Service" },
+  { "day": 30, "title": "Desiring God Every Day" }
+];
+
 // ─── DATE DETECTION (Africa/Lagos, UTC+1) ───
 const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
 const year  = nowLagos.getFullYear();
-const month = nowLagos.getMonth(); // 6 = July, 7 = August
+const month = nowLagos.getMonth(); // 6 = July, 7 = August, 8 = September
 const day   = nowLagos.getDate();
 
-let isAugustActive = (year > 2026 || (year === 2026 && month >= 7));
+let activeMonthData, folderName, themeText, badgeText, targetMonthIndex;
 
-// Select active data & config based on current date
-const activeMonthData = isAugustActive ? augustData : julyData;
-const folderName      = isAugustActive ? '2026August' : '2026July';
-const startDow        = isAugustActive ? 6 : 3; // Aug starts Sat (6), Jul starts Wed (3)
-const themeText       = isAugustActive ? 'The Greatness of God' : 'The Believer’s Duty to the Nation';
-const badgeText       = isAugustActive ? 'August 2026 Edition' : 'July 2026 Edition';
+if (year > 2026 || (year === 2026 && month >= 8)) {
+  activeMonthData  = septemberData;
+  folderName       = '2026September';
+  themeText        = 'Desiring God';
+  badgeText        = 'September 2026 Edition';
+  targetMonthIndex = 8;
+} else if (year === 2026 && month === 7) {
+  activeMonthData  = augustData;
+  folderName       = '2026August';
+  themeText        = 'The Greatness of God';
+  badgeText        = 'August 2026 Edition';
+  targetMonthIndex = 7;
+} else {
+  activeMonthData  = julyData;
+  folderName       = '2026July';
+  themeText        = 'The Believer’s Duty to the Nation';
+  badgeText        = 'July 2026 Edition';
+  targetMonthIndex = 6;
+}
 
-// Set UI elements
+// Calculate starting day of week for grid alignment (0 = Sun, 1 = Mon...)
+const startDow = new Date(2026, targetMonthIndex, 1).getDay();
+
+// Set UI Header elements
 document.getElementById('pageTitle').textContent = `Still Waters | ${badgeText} — ${themeText}`;
 document.getElementById('editionBadge').textContent = badgeText;
 document.getElementById('headerTheme').textContent = themeText;
 
-const unlockedUpTo = isAugustActive ? (month === 7 ? day : 31) : day;
+const unlockedUpTo = (year === 2026 && month === targetMonthIndex) ? day : activeMonthData.length;
 
 // Featured Banner
 if (unlockedUpTo > 0) {
