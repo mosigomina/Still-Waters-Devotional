@@ -465,12 +465,32 @@ for entry in september_devotionals:
     # Body HTML paragraph construction
     body_html = "".join([f"<p>{p}</p>" for p in entry["body"]])
     
-    # Links matching August structure (day1 points back to August 31)
+    # Navigation links matching August structure (day1 points back to August 31)
     prev_link = "../2026August/day31.html" if day == 1 else f"day{day-1}.html"
     next_link = f"day{day+1}.html" if day < 30 else "#"
     
-    # Direct substitutions matching the template
-    page_html = template_content
+    # Corrected client-side date guard script injected into <head>
+    date_guard_script = f"""<script>
+  (function() {{
+    const nowLagos = new Date(new Date().toLocaleString('en-US', {{ timeZone: 'Africa/Lagos' }}));
+    const currentYear = nowLagos.getFullYear();
+    const currentMonth = nowLagos.getMonth(); // 8 = September
+    const currentDay = nowLagos.getDate();
+
+    const pageMonth = 8;
+    const pageDay = {day};
+
+    if (currentYear < 2026 || (currentYear === 2026 && (currentMonth < pageMonth || (currentMonth === pageMonth && currentDay < pageDay)))) {{
+      alert("This devotional is not available yet. It will unlock on September {day}. Redirecting to today's reading.");
+      window.location.href = "../index.html";
+    }}
+  }})();
+</script>"""
+
+    # Inject the date guard directly before </head>
+    page_html = template_content.replace("</head>", f"{date_guard_script}\n</head>")
+    
+    # Replace template placeholders
     page_html = page_html.replace("{{DAY}}", str(day))
     page_html = page_html.replace("{{TITLE}}", title)
     page_html = page_html.replace("{{OPENING}}", entry["opening"])
@@ -487,93 +507,4 @@ for entry in september_devotionals:
     with open(file_path, "w", encoding="utf-8") as f:
         f.write(page_html)
 
-print(f"Successfully generated 30 HTML pages in '{output_dir}/'.")
-
-# Generate September Monthly Index Page
-index_items_html = ""
-for entry in september_devotionals:
-    day = entry["day"]
-    title = entry["title"]
-    index_items_html += f'<li><a href="day{day}.html">September {day} — {title}</a></li>\n'
-
-september_index_html = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Still Waters | September 2026 Edition</title>
-    <style>
-        body {{
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            line-height: 1.6;
-            background-color: #0d1b2a;
-            color: #e8dcc8;
-        }}
-        header {{
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 1px solid rgba(201,168,76,0.2);
-            padding-bottom: 15px;
-        }}
-        h1 {{
-            color: #e8c97a;
-            margin-bottom: 5px;
-        }}
-        .theme {{
-            font-style: italic;
-            color: #c9a84c;
-        }}
-        ul.entry-list {{
-            list-style-type: none;
-            padding: 0;
-        }}
-        ul.entry-list li {{
-            margin-bottom: 10px;
-            padding: 10px;
-            border-bottom: 1px solid rgba(201,168,76,0.1);
-        }}
-        ul.entry-list a {{
-            text-decoration: none;
-            color: #e8c97a;
-            font-weight: bold;
-        }}
-        ul.entry-list a:hover {{
-            text-decoration: underline;
-        }}
-        .back-link {{
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: #c9a84c;
-        }}
-    </style>
-</head>
-<body>
-    <header>
-        <h1>Still Waters Daily Devotional</h1>
-        <h2>September 2026 Edition</h2>
-        <p class="theme">Theme: Desiring God</p>
-    </header>
-
-    <main>
-        <h3>Daily Entries</h3>
-        <ul class="entry-list">
-            {index_items_html}
-        </ul>
-    </main>
-
-    <footer>
-        <a href="../index.html" class="back-link">&larr; Back to Main Index</a>
-    </footer>
-</body>
-</html>
-"""
-
-index_file_path = os.path.join(output_dir, "index.html")
-with open(index_file_path, "w", encoding="utf-8") as f:
-    f.write(september_index_html)
-
-print(f"Successfully generated September Monthly Index at '{index_file_path}'.")
+print(f"Successfully generated 30 guarded HTML pages in '{output_dir}/'.")

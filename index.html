@@ -428,7 +428,28 @@ document.getElementById('pageTitle').textContent = `Still Waters | ${badgeText} 
 document.getElementById('editionBadge').textContent = badgeText;
 document.getElementById('headerTheme').textContent = themeText;
 
-const unlockedUpTo = (year === 2026 && month === targetMonthIndex) ? day : activeMonthData.length;
+// Strict date calculation: Only unlock days up to today's exact date
+let unlockedUpTo = 0;
+
+if (year > 2026) {
+  // Past year: unlock all days in historical editions
+  unlockedUpTo = activeMonthData.length;
+} else if (year < 2026) {
+  // Prior year relative to release: lock all days
+  unlockedUpTo = 0;
+} else {
+  // Year is 2026: Compare current month against target month
+  if (month > targetMonthIndex) {
+    // Current month is past target month: unlock all days in target month
+    unlockedUpTo = activeMonthData.length;
+  } else if (month === targetMonthIndex) {
+    // Currently in target month: unlock up to today's date
+    unlockedUpTo = day;
+  } else {
+    // Target month is in the future: lock all days
+    unlockedUpTo = 0;
+  }
+}
 
 // Featured Banner
 if (unlockedUpTo > 0) {

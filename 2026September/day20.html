@@ -91,6 +91,7 @@
       margin-bottom: 24px;
       font-size: 1.1rem;
       line-height: 1.8;
+      text-align: justify;
     }
 
     /* Color-Coded Cards */
@@ -172,6 +173,22 @@
       border-color: rgba(201,168,76,0.4);
     }
   </style>
+<script>
+  (function() {
+    const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+    const currentYear = nowLagos.getFullYear();
+    const currentMonth = nowLagos.getMonth(); // 8 = September
+    const currentDay = nowLagos.getDate();
+
+    const pageMonth = 8;
+    const pageDay = 20;
+
+    if (currentYear < 2026 || (currentYear === 2026 && (currentMonth < pageMonth || (currentMonth === pageMonth && currentDay < pageDay)))) {
+      alert("This devotional is not available yet. It will unlock on September 20. Redirecting to today's reading.");
+      window.location.href = "../index.html";
+    }
+  })();
+</script>
 </head>
 <body>
 
