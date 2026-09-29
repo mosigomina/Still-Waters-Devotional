@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>October 20, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:    #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Georgia', 'Segoe UI', serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+<script>
+  (function() {
+    const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+    const currentYear = nowLagos.getFullYear();
+    const currentMonth = nowLagos.getMonth(); // 9 = October
+    const currentDay = nowLagos.getDate();
+
+    const pageMonth = 9;
+    const pageDay = 20;
+
+    if (currentYear < 2026 || (currentYear === 2026 && (currentMonth < pageMonth || (currentMonth === pageMonth && currentDay < pageDay)))) {
+      alert("This devotional is not available yet. It will unlock on October 20. Redirecting to today's reading.");
+      window.location.href = "../index.html";
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">OCTOBER 20</div>
+    <h1>To Find Life, Seek Life</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      And he said, “Come in, O blessed of the LORD! Why do you stand outside? (Genesis 24:31)
+    </div>
+
+    <div class="content">
+      <p>Knowing ourselves and the kinds of bad things we are capable of, it’s very humbling that God wants us to enter and possess the realities of His Kingdom. No, His intention is not that we will endlessly search for them. He wants us to find them.</p><p>It is true that some of these things are for later rather than now. For example, we can only become completely like Christ Jesus later rather than now (1 John 3:2). We can also only know everything (instead of knowing only in part) later rather than now (1 Corinthians 13:9–10).</p><p>But, there are things we can seek and find now rather than later. For example, the fulfilment of God’s will and work in our lives.</p><p>When the Lord Jesus instructed His disciples to seek the Kingdom of God and His righteousness before anything else (Matthew 6:33), He wasn’t asking you to become a perpetual truth seeker. Many people have become ‘truth seekers.’ They are always on the path of seeking, which is not bad. But they seem more interested in knowing stuff than in practicing them. Therefore, they are not likely to know (in living experience) the truth of Christ or go on to embody the character of His Spirit.</p><p>Apostle Paul mentions these people in 2 Timothy 3:7. In short, it is not God’s plan that you are always seeking but never finding, always thirsting but never being satisfied.</p><p>God does not consider it spiritual progress to live in the shadows of His will and word: drawing mental pictures of them, even singing about them; never really grasping them. Everything Christ Jesus died for you to have and be, He expects you to seek out in study and prayer and practice. And after you have done this, He expects you to expect to find them.</p><p>Maybe not all of these things—certainly not the redemption of the physical body; but what about the fruit of the Spirit or His gifts which are meant for the body of Christ? These are meant for discovery and active, everyday use.</p><p>The present world is destined to end (Hebrews 13:14). If you continue going at the things of God with a vague and abstract attitude, thinking, “If not today, then tomorrow,” there is no telling what tomorrow holds. At the moment, you can choose whether to remain only a seeker of God’s things or a true discoverer of the treasures of His Kingdom.</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        [He] sent his servant at supper time to say to those who were invited, ‘Come, for all things are now ready.’ <br><span style="font-style: normal; display: block; margin-top: 6px;">(Luke 14:17)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Dear Lord, being a God-seeker makes me feel different and special. But I want to go beyond this. I want to experience all that You have set before me with the help of Your Holy Spirit. Help me discover and walk in the things of Your Kingdom, so I would be more useful to You and offer reasonable and meaningful service and worship.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today’s Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day19.html" class="nav-btn">← Previous Day</a>
+      <a href="day21.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today’s devotional: To Find Life, Seek Life',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

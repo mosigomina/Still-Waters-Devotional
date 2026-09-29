@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>October 6, 2026 — Still Waters Devotional</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:         #0d1b2a;
+      --card-bg:    #132235;
+      --gold:       #c9a84c;
+      --gold-lt:    #e8c97a;
+      --cream:      #e8dcc8;
+      --muted:      #8a9bb0;
+      --border:     rgba(201,168,76,0.18);
+      
+      /* Color-Coded Panel Backgrounds */
+      --mv-bg:      #120e24;
+      --mv-border:  #2d2250;
+      --prayer-bg:  #0a1f18;
+      --prayer-border: #184836;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── TOP HEADER ─── */
+    header {
+      background: linear-gradient(160deg, #0a1525 0%, #1a3050 60%, #0d1b2a 100%);
+      border-bottom: 1px solid var(--border);
+      text-align: center;
+      padding: 40px 20px 32px;
+    }
+    .back-link {
+      display: inline-block;
+      color: var(--gold);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.85rem;
+      text-decoration: none;
+      margin-bottom: 16px;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 0.8; }
+    .date-badge {
+      color: var(--gold-lt);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      color: var(--gold-lt);
+      font-weight: 400;
+      letter-spacing: 1px;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    main {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px 20px 60px;
+      flex: 1;
+    }
+
+    /* Scripture Header Box */
+    .scripture-box {
+      background: var(--card-bg);
+      border-left: 3px solid var(--gold);
+      padding: 24px 28px;
+      border-radius: 8px;
+      margin-bottom: 32px;
+      font-style: italic;
+      font-size: 1.08rem;
+      color: var(--cream);
+    }
+
+    /* Body Paragraphs */
+    .content p {
+      margin-bottom: 24px;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      text-align: justify;
+    }
+
+    /* Color-Coded Cards */
+    .panel-card {
+      border-radius: 10px;
+      padding: 24px 28px;
+      margin: 28px 0;
+    }
+    .panel-card.mv-card {
+      background: var(--mv-bg);
+      border: 1px solid var(--mv-border);
+    }
+    .panel-card.prayer-card {
+      background: var(--prayer-bg);
+      border: 1px solid var(--prayer-border);
+    }
+    .panel-title {
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 600;
+    }
+    .mv-card .panel-title { color: #8b72de; }
+    .prayer-card .panel-title { color: #40b585; }
+    
+    .panel-text {
+      font-style: italic;
+      font-size: 1.08rem;
+    }
+
+    /* ─── SHARE BUTTON ─── */
+    .share-container {
+      text-align: center;
+      margin: 40px 0 20px;
+    }
+    .share-btn {
+      background: var(--gold);
+      color: #0a1525;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 25px;
+      font-weight: bold;
+      font-family: 'Georgia', 'Segoe UI', serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s, background 0.15s;
+    }
+    .share-btn:hover {
+      transform: translateY(-2px);
+      background: var(--gold-lt);
+    }
+
+    /* ─── NAVIGATION BUTTONS ─── */
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 30px;
+      padding-top: 20px;
+    }
+    .nav-btn {
+      background: var(--card-bg);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.88rem;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .nav-btn:hover {
+      background: #1b3050;
+      border-color: rgba(201,168,76,0.4);
+    }
+  </style>
+<script>
+  (function() {
+    const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
+    const currentYear = nowLagos.getFullYear();
+    const currentMonth = nowLagos.getMonth(); // 9 = October
+    const currentDay = nowLagos.getDate();
+
+    const pageMonth = 9;
+    const pageDay = 6;
+
+    if (currentYear < 2026 || (currentYear === 2026 && (currentMonth < pageMonth || (currentMonth === pageMonth && currentDay < pageDay)))) {
+      alert("This devotional is not available yet. It will unlock on October 6. Redirecting to today's reading.");
+      window.location.href = "../index.html";
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <header>
+    <a href="index.html" class="back-link">← Back to Calendar</a>
+    <div class="date-badge">OCTOBER 6</div>
+    <h1>Present in His Presence</h1>
+  </header>
+
+  <main>
+    <div class="scripture-box">
+      One thing I have desired of the Lord, that will I seek: that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to inquire in His temple. (Psalm 27:4)
+    </div>
+
+    <div class="content">
+      <p>A good number of people who were born into Christian homes have—or at least had—the culture of morning devotion. A few out of this number also had night prayer and devotion before bedtime with the help of devotionals like this one. Memory verses were dutifully recited, Bible passages were read and a simplified explanation was given. But most importantly, meeting with God daily was a constant, a must.</p><p>However, there usually is also a great deal of forgetfulness. Immediately the book is closed, everyone goes their way, thinking that they have given to God the 30 minutes allocated to Him for the day. You might not even recall the previous topic or verse, let alone put to practice what you had learnt, as Joshua 1:8 commands.</p><p>The charge today is not to make you despise or look down on morning devotion. The charge is to remind you to desire to be like the Psalmist: to seek the Lord to the point of dwelling in His presence all day long—and even for the rest of your life (Psalm 27:4).</p><p>The desire for God’s presence births meditation on the person of Jesus Christ. It also guarantees a controlled mental climate. It is the same way you don’t have to tell people who are in love to think about each other all day. As you set your love on Jesus and put Him before your eyes all day long, your devotion to Him will get stronger.</p><p>The Bible guarantees that when you turn to the Lord (and keep your gaze trained on Him), the veil is taken away. Then, you will begin to look like, sound like, and think like Him, even in the heat of emotional turbulence. Then it will be true that you know the One you are worshipping and walking with (John 4:21–22).</p>
+    </div>
+
+    <div class="panel-card mv-card">
+      <div class="panel-title">📖 MEMORY VERSE</div>
+      <div class="panel-text">
+        One thing I have desired of the Lord, that will I seek: that I may dwell in the house of the Lord all the days of my life, to behold the beauty of the Lord, and to inquire in His temple. <br><span style="font-style: normal; display: block; margin-top: 6px;">(Psalm 27:4)</span>
+      </div>
+    </div>
+
+    <div class="panel-card prayer-card">
+      <div class="panel-title">🙏 PRAYER</div>
+      <div class="panel-text">
+        Lord Jesus, this world is a busy and turbulent place. I want to be present with You in my heart and mind. Please, help me.
+      </div>
+    </div>
+
+    <div class="share-container">
+      <button class="share-btn" id="shareBtn">📤 Share Today’s Devotional</button>
+    </div>
+
+    <div class="nav-buttons">
+      <a href="day5.html" class="nav-btn">← Previous Day</a>
+      <a href="day7.html" class="nav-btn">Next Day →</a>
+    </div>
+  </main>
+
+<script>
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const shareData = {
+      title: 'Still Waters Devotional',
+      text: 'Read today’s devotional: Present in His Presence',
+      url: window.location.href
+    };
+    if (navigator.share) {
+      try { await navigator.share(shareData); } catch (e) {}
+    } else {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link copied to clipboard!');
+    }
+  });
+</script>
+</body>
+</html>

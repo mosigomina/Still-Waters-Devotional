@@ -256,6 +256,7 @@
       <div class="edition-badge" id="editionBadge">Loading Edition...</div>
       <select class="archive-select" onchange="if(this.value) location.href = this.value;">
         <option value="">📁 Archive Menu</option>
+        <option value="2026October/index.html">October 2026</option>
         <option value="2026September/index.html">September 2026</option>
         <option value="2026August/index.html">August 2026</option>
         <option value="2026July/index.html">July 2026</option>
@@ -392,15 +393,55 @@ const septemberData = [
   { "day": 30, "title": "Desiring God Every Day" }
 ];
 
+const octoberData = [
+  { "day": 1, "title": "Get Life from the Spirit" },
+  { "day": 2, "title": "The Heartfelt Prayer" },
+  { "day": 3, "title": "Meditating on God’s Word" },
+  { "day": 4, "title": "Brokenness and Humility" },
+  { "day": 5, "title": "Conviction by the Word" },
+  { "day": 6, "title": "Present in His Presence" },
+  { "day": 7, "title": "A Spiritual Man" },
+  { "day": 8, "title": "Don’t Cut the Roots Off!" },
+  { "day": 9, "title": "How Balanced is Your Diet?" },
+  { "day": 10, "title": "Humble Yourself Before God" },
+  { "day": 11, "title": "Participate in the Process" },
+  { "day": 12, "title": "Grow with Patience" },
+  { "day": 13, "title": "Shed Some Weight" },
+  { "day": 14, "title": "Let God Convince You" },
+  { "day": 15, "title": "Sow Life, Reap Life" },
+  { "day": 16, "title": "The Fight of Faith" },
+  { "day": 17, "title": "Count the Cost" },
+  { "day": 18, "title": "Spiritual Growth through Faith in Christ Jesus" },
+  { "day": 19, "title": "Pursuing Spiritual Maturity" },
+  { "day": 20, "title": "To Find Life, Seek Life" },
+  { "day": 21, "title": "The Joint Supplies" },
+  { "day": 22, "title": "Community and Fellowship" },
+  { "day": 23, "title": "Loving a Community of Believers" },
+  { "day": 24, "title": "Spiritual Fruit and Character" },
+  { "day": 25, "title": "Discipleship" },
+  { "day": 26, "title": "Maximising God’s Grace" },
+  { "day": 27, "title": "The Mind of Christ" },
+  { "day": 28, "title": "Transformation through Renewal" },
+  { "day": 29, "title": "Choose This Day!" },
+  { "day": 30, "title": "Overcoming Sin and Temptation" },
+  { "day": 31, "title": "Set God’s Pleasure Before You" }
+];
+
 // ─── DATE DETECTION (Africa/Lagos, UTC+1) ───
 const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
 const year  = nowLagos.getFullYear();
-const month = nowLagos.getMonth(); // 6 = July, 7 = August, 8 = September
+const month = nowLagos.getMonth(); // 6 = July, 7 = August, 8 = September, 9 = October
 const day   = nowLagos.getDate();
 
 let activeMonthData, folderName, themeText, badgeText, targetMonthIndex;
 
-if (year > 2026 || (year === 2026 && month >= 8)) {
+if (year > 2026 || (year === 2026 && month >= 9)) {
+  activeMonthData  = octoberData;
+  folderName       = '2026October';
+  themeText        = 'Waking Up to Grace';
+  badgeText        = 'October 2026 Edition';
+  targetMonthIndex = 9;
+} else if (year === 2026 && month === 8) {
   activeMonthData  = septemberData;
   folderName       = '2026September';
   themeText        = 'Desiring God';
