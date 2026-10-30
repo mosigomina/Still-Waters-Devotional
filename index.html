@@ -256,6 +256,7 @@
       <div class="edition-badge" id="editionBadge">Loading Edition...</div>
       <select class="archive-select" onchange="if(this.value) location.href = this.value;">
         <option value="">📁 Archive Menu</option>
+        <option value="2026November/index.html">November 2026</option>
         <option value="2026October/index.html">October 2026</option>
         <option value="2026September/index.html">September 2026</option>
         <option value="2026August/index.html">August 2026</option>
@@ -427,15 +428,54 @@ const octoberData = [
   { "day": 31, "title": "Set God’s Pleasure Before You" }
 ];
 
+const novemberData = [
+  { "day": 1, "title": "What Do You Believe?" },
+  { "day": 2, "title": "Take Heed" },
+  { "day": 3, "title": "The Lens of the Word" },
+  { "day": 4, "title": "Cleanse Yourself" },
+  { "day": 5, "title": "Back to the Drawing Board" },
+  { "day": 6, "title": "Guard Your Love Life" },
+  { "day": 7, "title": "The Adjusting Heart" },
+  { "day": 8, "title": "The Blessedness of Obscurity" },
+  { "day": 9, "title": "The Collaborative Will" },
+  { "day": 10, "title": "What God Wants" },
+  { "day": 11, "title": "The Path of Life" },
+  { "day": 12, "title": "Be an Imitator" },
+  { "day": 13, "title": "Forgiving Ignorance" },
+  { "day": 14, "title": "Standing to Run" },
+  { "day": 15, "title": "The Track Event" },
+  { "day": 16, "title": "Sowing to the Spirit" },
+  { "day": 17, "title": "Watch and Pray" },
+  { "day": 18, "title": "The Might of Presence" },
+  { "day": 19, "title": "Finding Grace in Times of Need" },
+  { "day": 20, "title": "Godly Counsel" },
+  { "day": 21, "title": "Recount the Promises" },
+  { "day": 22, "title": "Press On" },
+  { "day": 23, "title": "The Finisher’s Grace" },
+  { "day": 24, "title": "Set Your Affection Above" },
+  { "day": 25, "title": "Have an Eternal View" },
+  { "day": 26, "title": "The End of the Wicked" },
+  { "day": 27, "title": "The End That Glorifies God" },
+  { "day": 28, "title": "Eternity" },
+  { "day": 29, "title": "The Beginning of the End" },
+  { "day": 30, "title": "A Thankful Heart" }
+];
+
 // ─── DATE DETECTION (Africa/Lagos, UTC+1) ───
 const nowLagos = new Date(new Date().toLocaleString('en-US', { timeZone: 'Africa/Lagos' }));
 const year  = nowLagos.getFullYear();
-const month = nowLagos.getMonth(); // 6 = July, 7 = August, 8 = September, 9 = October
+const month = nowLagos.getMonth(); // 6 = July, 7 = August, 8 = September, 9 = October, 10 = November
 const day   = nowLagos.getDate();
 
 let activeMonthData, folderName, themeText, badgeText, targetMonthIndex;
 
-if (year > 2026 || (year === 2026 && month >= 9)) {
+if (year > 2026 || (year === 2026 && month >= 10)) {
+  activeMonthData  = novemberData;
+  folderName       = '2026November';
+  themeText        = 'Steadfast to the End';
+  badgeText        = 'November 2026 Edition';
+  targetMonthIndex = 10;
+} else if (year === 2026 && month === 9) {
   activeMonthData  = octoberData;
   folderName       = '2026October';
   themeText        = 'Waking Up to Grace';
